@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Anavai</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1.2fr;
+  gap: 0; min-height: calc(100vh - var(--nav-h));
+  padding-top: var(--nav-h);
+}
+.contact-left {
+  background: var(--charcoal); padding: 5rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.contact-right { padding: 5rem; display: flex; flex-direction: column; justify-content: center; }
+.contact-intro { margin-bottom: 4rem; }
+.contact-intro p {
+  font-size: 0.86rem; line-height: 2; color: rgba(255,255,255,0.5);
+  max-width: 340px; margin-top: 1.5rem; font-weight: 300;
+}
+.contact-details { display: flex; flex-direction: column; gap: 2.5rem; }
+.contact-item { }
+.contact-item-label {
+  font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--ochre); margin-bottom: 0.5rem; font-weight: 400;
+}
+.contact-item-val {
+  font-family: var(--font-display); font-size: 1.3rem; font-weight: 300;
+  color: var(--cream); line-height: 1.4;
+}
+.contact-item-sub { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 0.3rem; }
+.contact-social { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.contact-social-link {
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s;
+}
+.contact-social-link:hover { color: var(--ochre); }
+.contact-form-title {
+  font-family: var(--font-display); font-size: 2.5rem; font-weight: 300;
+  color: var(--charcoal); margin-bottom: 0.5rem; line-height: 1.1;
+}
+.contact-form-title em { font-style: italic; }
+.contact-form-sub {
+  font-size: 0.8rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.8;
+}
+.contact-type-select {
+  display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap;
+}
+.type-btn {
+  background: none; border: 1px solid var(--sand-deep); cursor: pointer;
+  font-family: var(--font-body); font-size: 0.6rem;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+  padding: 0.5rem 1.2rem; transition: all 0.25s;
+}
+.type-btn:hover, .type-btn.active {
+  background: var(--charcoal); color: var(--cream); border-color: var(--charcoal);
+}
+.contact-form { display: flex; flex-direction: column; gap: 0; }
+.form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group-c { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
+@media (max-width: 1024px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-left { padding: 4rem 2.5rem 3rem; }
+  .contact-right { padding: 3rem 2.5rem 5rem; }
+}
+@media (max-width: 640px) { .form-2col { grid-template-columns: 1fr; } .contact-type-select { flex-direction: column; } }
+</style>
+  <script type="module" crossorigin src="/assets/nav-BejPQc87.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/nav-ChCQye3_.css">
+</head>
+<body>
+<nav id="mainNav">
+  <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  <a href="../index.html" class="nav-logo">Anavai</a>
+  <ul class="nav-links"><li><a href="collections.html">Collections</a></li><li><a href="designers.html">For Designers</a></li><li><a href="hotels.html">For Hotels</a></li><li><a href="process.html">Process</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <div class="nav-right"><button class="cart-btn" id="cartToggle"><span class="cart-label">Cart</span><span class="cart-count" id="cartCount">0</span></button></div>
+</nav>
+<div class="mobile-nav-overlay" id="mobileNavOverlay"><div class="mobile-nav-inner"><a href="../index.html" class="mobile-nav-logo">Anavai</a><ul class="mobile-nav-links"><li><a href="collections.html">Collections</a></li><li><a href="designers.html">For Designers</a></li><li><a href="hotels.html">For Hotels</a></li><li><a href="process.html">Process</a></li><li><a href="contact.html">Contact</a></li></ul><div class="mobile-nav-footer"><p>studio@anavai.com</p></div></div></div>
+
+<div class="contact-grid">
+  <div class="contact-left">
+    <div class="contact-intro">
+      <p class="page-hero-eyebrow" style="color:var(--ochre);font-size:0.62rem;letter-spacing:0.32em;text-transform:uppercase;margin-bottom:1rem;">Get in Touch</p>
+      <h1 style="font-family:var(--font-display);font-size:clamp(2.5rem,4vw,4rem);font-weight:300;color:var(--cream);line-height:1.1;">Let's begin<br><em style="font-style:italic;">your wall</em></h1>
+      <p>We respond to every enquiry personally — usually within 48 hours. There are no automated responses here. A founder reads each message.</p>
+    </div>
+    <div class="contact-details">
+      <div class="contact-item">
+        <p class="contact-item-label">Email</p>
+        <p class="contact-item-val">studio@anavai.com</p>
+        <p class="contact-item-sub">Response within 48 hours, guaranteed</p>
+      </div>
+      <div class="contact-item">
+        <p class="contact-item-label">Trade & Designers</p>
+        <p class="contact-item-val">trade@anavai.com</p>
+        <p class="contact-item-sub">Direct line for verified trade accounts</p>
+      </div>
+      <div class="contact-item">
+        <p class="contact-item-label">Studio Location</p>
+        <p class="contact-item-val">Europe (visits by appointment)</p>
+        <p class="contact-item-sub">We travel to your project location across the continent</p>
+      </div>
+      <div class="contact-item">
+        <p class="contact-item-label">Follow the Studio</p>
+        <div class="contact-social">
+          <a href="#" class="contact-social-link">Instagram</a>
+          <a href="#" class="contact-social-link">Pinterest</a>
+          <a href="#" class="contact-social-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-right">
+    <h2 class="contact-form-title">Send us<br>a <em>message</em></h2>
+    <p class="contact-form-sub">Tell us about your project and what kind of conversation you'd like to start. No commitment required — just a conversation.</p>
+
+    <div class="contact-type-select">
+      <button class="type-btn active" onclick="selectType(this)">Private Client</button>
+      <button class="type-btn" onclick="selectType(this)">Interior Designer</button>
+      <button class="type-btn" onclick="selectType(this)">Hotel / Retreat</button>
+      <button class="type-btn" onclick="selectType(this)">Press / Media</button>
+      <button class="type-btn" onclick="selectType(this)">Other</button>
+    </div>
+
+    <div class="contact-form">
+      <div class="form-2col">
+        <div class="form-group-c"><label class="form-label">First Name</label><input type="text" class="form-input" placeholder="Elena"></div>
+        <div class="form-group-c"><label class="form-label">Last Name</label><input type="text" class="form-input" placeholder="Moretti"></div>
+      </div>
+      <div class="form-group-c"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="elena@studio.com"></div>
+      <div class="form-group-c"><label class="form-label">Phone (optional)</label><input type="tel" class="form-input" placeholder="+39 ..."></div>
+      <div class="form-2col">
+        <div class="form-group-c"><label class="form-label">Country</label><input type="text" class="form-input" placeholder="Italy"></div>
+        <div class="form-group-c"><label class="form-label">Approx. Budget</label>
+          <select class="form-input">
+            <option value="">— Select —</option>
+            <option>Under €5,000</option>
+            <option>€5,000 – €15,000</option>
+            <option>€15,000 – €50,000</option>
+            <option>Over €50,000</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group-c" style="margin-bottom:0.6rem;">
+        <div style="display:flex;align-items:center;gap:0.8rem;">
+          <input type="checkbox" id="sample" style="width:16px;height:16px;">
+          <label for="sample" style="font-size:0.75rem;color:var(--muted);cursor:pointer;">I would like to receive a hand-painted sample panel (30×30cm)</label>
+        </div>
+      </div>
+      <div class="form-group-c"><label class="form-label">Your Message</label><textarea class="form-input" rows="5" placeholder="Tell us about your space, the atmosphere you'd like to create, any specific collections you're drawn to, and your timeline..."></textarea></div>
+      <button class="btn-primary" onclick="submitContact()" style="align-self:flex-start;margin-top:0.5rem;">Send Message →</button>
+      <p style="font-size:0.65rem;color:var(--muted);margin-top:1rem;line-height:1.7;">Your details are used only to respond to your enquiry. We don't share them with third parties or add you to marketing lists without your consent.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand"><span class="footer-logo">Anavai</span><p class="footer-tagline">Artisanal wallpaper for spaces that hold meaning.</p></div>
+    <div><p class="footer-col-title">Collections</p><ul class="footer-links"><li><a href="collections.html">All Collections</a></li></ul></div>
+    <div><p class="footer-col-title">Studio</p><ul class="footer-links"><li><a href="process.html">Process</a></li><li><a href="designers.html">For Designers</a></li><li><a href="hotels.html">For Hotels</a></li></ul></div>
+    <div><p class="footer-col-title">Contact</p><ul class="footer-links"><li><a href="contact.html">studio@anavai.com</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 Anavai. Handmade in Europe.</p></div>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar"><div class="cart-header"><h2 class="cart-title">Your Enquiry Cart</h2><button class="cart-close" onclick="closeCart()">✕</button></div><div class="cart-items" id="cartItems"><p class="cart-empty">Your cart is empty</p></div><div class="cart-footer" id="cartFooter" style="display:none"><div class="cart-grand-total"><span class="cart-grand-label">Total</span><span class="cart-grand-price" id="cartTotal">€0</span></div><button class="btn-checkout" onclick="openCheckout()">Proceed to Enquiry</button></div></div>
+<div class="checkout-modal" id="checkoutModal"><div class="checkout-modal-bg" onclick="closeCheckout()"></div><div class="checkout-box" id="checkoutBox"><button class="checkout-close" onclick="closeCheckout()">✕</button><h2>Your Enquiry</h2><div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input"></div><div class="form-group"><label class="form-label">Project Details</label><textarea class="form-input" rows="4"></textarea></div><div class="checkout-actions"><button class="btn-cancel" onclick="closeCheckout()">Back</button><button class="btn-place-order" onclick="placeOrder()">Send →</button></div></div></div>
+<div class="notif" id="notif"></div>
+<script>
+function selectType(btn) {
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function submitContact() {
+  const form = document.querySelector('.contact-right');
+  form.innerHTML = `
+    <div style="text-align:center;padding:4rem 2rem;">
+      <p style="font-family:var(--font-display);font-size:4rem;font-weight:300;color:var(--ochre);margin-bottom:1.5rem;">✦</p>
+      <h2 style="font-family:var(--font-display);font-size:2.5rem;font-weight:300;color:var(--charcoal);margin-bottom:1rem;">Message Received</h2>
+      <p style="font-size:0.86rem;line-height:2;color:var(--muted);max-width:380px;margin:0 auto 2rem;">Thank you for reaching out. A founder will read your message personally and respond within 48 hours.<br><br>In the meantime, you're welcome to explore our collections.</p>
+      <a href="collections.html" class="btn-primary" style="display:inline-block;text-decoration:none;">Explore Collections</a>
+    </div>
+  `;
+}
+</script>
+</body>
+</html>

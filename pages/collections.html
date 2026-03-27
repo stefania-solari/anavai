@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collections — Anavai</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.coll-filter-bar {
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+  padding: 2rem 5rem 0;
+}
+.filter-btn {
+  background: none; border: 1px solid var(--sand-deep); cursor: pointer;
+  font-family: var(--font-body); font-size: 0.62rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+  padding: 0.55rem 1.2rem; transition: all 0.25s; font-weight: 400;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--charcoal); color: var(--cream); border-color: var(--charcoal);
+}
+.all-collections {
+  padding: 3rem 5rem 6rem;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px; background: var(--sand-deep);
+}
+.product-card {
+  background: var(--cream); position: relative;
+  overflow: hidden; cursor: pointer;
+  display: flex; flex-direction: column;
+}
+.product-card-art {
+  aspect-ratio: 3/4; position: relative; overflow: hidden;
+}
+.product-card-art svg {
+  width: 100%; height: 100%; position: absolute; top: 0; left: 0;
+  transition: transform 0.6s ease;
+}
+.product-card:hover .product-card-art svg { transform: scale(1.04); }
+.product-card-info { padding: 1.5rem; background: var(--cream); flex: 1; }
+.prod-element {
+  font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--ochre); margin-bottom: 0.4rem;
+}
+.prod-name {
+  font-family: var(--font-display); font-size: 1.6rem; font-weight: 300;
+  color: var(--charcoal); line-height: 1.1; margin-bottom: 0.3rem;
+}
+.prod-name em { font-style: italic; }
+.prod-desc {
+  font-size: 0.75rem; line-height: 1.8; color: var(--muted);
+  margin-bottom: 1.2rem; font-weight: 300;
+}
+.prod-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 1rem; border-top: 1px solid var(--sand);
+}
+.prod-price {
+  font-family: var(--font-display); font-size: 1.2rem; font-weight: 300;
+  color: var(--charcoal);
+}
+.prod-add {
+  background: none; border: 1px solid var(--sand-deep); cursor: pointer;
+  font-family: var(--font-body); font-size: 0.6rem;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+  padding: 0.55rem 1.1rem; transition: all 0.25s;
+}
+.prod-add:hover { background: var(--charcoal); color: var(--cream); border-color: var(--charcoal); }
+.feng-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--sage-deep); margin-bottom: 0.8rem;
+}
+.feng-badge::before {
+  content: '';
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--sage); flex-shrink: 0;
+}
+@media (max-width: 1024px) {
+  .coll-filter-bar { padding: 2rem 2.5rem 0; }
+  .all-collections { padding: 3rem 2.5rem 4rem; grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 640px) {
+  .all-collections { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  <a href="../index.html" class="nav-logo">Anavai</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="collections.html">Collections</a></li>
+    <li><a href="designers.html">For Designers</a></li>
+    <li><a href="hotels.html">For Hotels</a></li>
+    <li><a href="process.html">Process</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="cart-btn" id="cartToggle">
+      <span class="cart-label">Cart</span>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav-overlay" id="mobileNavOverlay">
+  <div class="mobile-nav-inner">
+    <a href="../index.html" class="mobile-nav-logo">Anavai</a>
+    <ul class="mobile-nav-links">
+      <li><a href="collections.html">Collections</a></li>
+      <li><a href="designers.html">For Designers</a></li>
+      <li><a href="hotels.html">For Hotels</a></li>
+      <li><a href="process.html">Process</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="mobile-nav-footer"><p>studio@anavai.com</p><p>Made in Europe · Handpainted</p></div>
+  </div>
+</div>
+
+<div class="page-hero">
+  <p class="page-hero-eyebrow">The Seven Elements</p>
+  <h1 class="page-hero-title">All <em>Collections</em></h1>
+  <p class="page-hero-sub">Each collection is named after a natural element and designed to cultivate a specific energy in your space. All patterns are hand-painted and made to order.</p>
+</div>
+
+<div class="coll-filter-bar">
+  <button class="filter-btn active" onclick="filterColl('all',this)">All Elements</button>
+  <button class="filter-btn" onclick="filterColl('fire',this)">Fire</button>
+  <button class="filter-btn" onclick="filterColl('water',this)">Water</button>
+  <button class="filter-btn" onclick="filterColl('earth',this)">Earth</button>
+  <button class="filter-btn" onclick="filterColl('metal',this)">Metal</button>
+  <button class="filter-btn" onclick="filterColl('wood',this)">Wood</button>
+</div>
+
+<div class="all-collections" id="collectionsGrid">
+
+  <!-- SOLARA -->
+  <div class="product-card" data-element="fire" id="solara">
+    <div class="product-card-art">
+      <svg viewBox="0 0 400 530" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="530" fill="#EAD8B8"/>
+        <circle cx="200" cy="260" r="210" fill="none" stroke="#C8974A" stroke-width="0.7" opacity="0.3"/>
+        <circle cx="200" cy="260" r="150" fill="#C8974A" opacity="0.12"/>
+        <circle cx="200" cy="260" r="95" fill="#C8974A" opacity="0.2"/>
+        <circle cx="200" cy="260" r="52" fill="#B86540" opacity="0.3"/>
+        <g transform="translate(200,260)" opacity="0.28">
+          <line x1="0" y1="-210" x2="0" y2="-100" stroke="#C8974A" stroke-width="2"/><line x1="0" y1="-210" x2="0" y2="-100" stroke="#C8974A" stroke-width="2" transform="rotate(30)"/><line x1="0" y1="-210" x2="0" y2="-100" stroke="#C8974A" stroke-width="2" transform="rotate(60)"/><line x1="0" y1="-210" x2="0" y2="-100" stroke="#C8974A" stroke-width="2" transform="rotate(90)"/><line x1="0" y1="-210" x2="0" y2="-100" stroke="#C8974A" stroke-width="2" transform="rotate(120)"/><line x1="0" y1="-210" x2="0" y2="-100" stroke="#C8974A" stroke-width="2" transform="rotate(150)"/><line x1="0" y1="-210" x2="0" y2="-100" stroke="#C8974A" stroke-width="2" transform="rotate(180)"/><line x1="0" y1="-210" x2="0" y2="-100" stroke="#C8974A" stroke-width="2" transform="rotate(225)"/><line x1="0" y1="-210" x2="0" y2="-100" stroke="#C8974A" stroke-width="2" transform="rotate(270)"/><line x1="0" y1="-210" x2="0" y2="-100" stroke="#C8974A" stroke-width="2" transform="rotate(315)"/>
+        </g>
+        <ellipse cx="55" cy="460" rx="55" ry="20" fill="#8A9E8C" opacity="0.28" transform="rotate(-20,55,460)"/>
+        <ellipse cx="345" cy="75" rx="50" ry="18" fill="#8A9E8C" opacity="0.28" transform="rotate(15,345,75)"/>
+      </svg>
+    </div>
+    <div class="product-card-info">
+      <p class="prod-element">Fire · Light · Energy</p>
+      <h3 class="prod-name"><em>Solara</em> — Golden Light</h3>
+      <p class="feng-badge">Feng Shui: South walls · Yang energy</p>
+      <p class="prod-desc">Mediterranean sun channelled through hand-applied ochre and terracotta pigments. Designed for lobbies, dining rooms, and spaces of welcome and vitality.</p>
+      <div class="prod-footer">
+        <p class="prod-price">€420–540/m²</p>
+        <button class="prod-add" onclick="addToCart('Solara — Golden Light','Fire · Made to order',480)">Enquire</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNDARA -->
+  <div class="product-card" data-element="water" id="undara">
+    <div class="product-card-art">
+      <svg viewBox="0 0 400 530" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="530" fill="#C0D5D5"/>
+        <path d="M0,160 Q100,120 200,160 Q300,200 400,160 L400,530 L0,530 Z" fill="#8AACAC" opacity="0.45"/>
+        <path d="M0,220 Q100,185 200,220 Q300,255 400,220 L400,530 L0,530 Z" fill="#6A9898" opacity="0.4"/>
+        <path d="M0,290 Q100,265 200,290 Q300,315 400,290 L400,530 L0,530 Z" fill="#4A7878" opacity="0.35"/>
+        <path d="M0,370 Q100,355 200,370 Q300,385 400,370 L400,530 L0,530 Z" fill="#2E5A5A" opacity="0.3"/>
+        <ellipse cx="200" cy="110" rx="60" ry="20" fill="white" opacity="0.18"/>
+        <ellipse cx="320" cy="85" rx="30" ry="10" fill="white" opacity="0.12"/>
+        <ellipse cx="80" cy="130" rx="25" ry="8" fill="white" opacity="0.1"/>
+      </svg>
+    </div>
+    <div class="product-card-info">
+      <p class="prod-element">Water · Calm · Wellness</p>
+      <h3 class="prod-name"><em>Undara</em> — Still Waters</h3>
+      <p class="feng-badge">Feng Shui: North walls · Yin energy</p>
+      <p class="prod-desc">Layered waves in teal and celadon, painted wet-on-wet to create depth and movement. Ideal for spas, treatment rooms, and bedroom sanctuaries.</p>
+      <div class="prod-footer">
+        <p class="prod-price">€460–560/m²</p>
+        <button class="prod-add" onclick="addToCart('Undara — Still Waters','Water · Made to order',510)">Enquire</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERRAE -->
+  <div class="product-card" data-element="earth" id="terrae">
+    <div class="product-card-art">
+      <svg viewBox="0 0 400 530" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="530" fill="#D2C39E"/>
+        <rect x="20" y="20" width="360" height="490" fill="none" stroke="#8A7850" stroke-width="0.6" opacity="0.4"/>
+        <rect x="60" y="60" width="280" height="410" fill="none" stroke="#8A7850" stroke-width="0.5" opacity="0.3"/>
+        <line x1="0" y1="265" x2="400" y2="265" stroke="#8A7850" stroke-width="0.5" opacity="0.35"/>
+        <line x1="200" y1="0" x2="200" y2="530" stroke="#8A7850" stroke-width="0.5" opacity="0.35"/>
+        <circle cx="200" cy="265" r="55" fill="#8A7850" opacity="0.16"/>
+        <rect x="125" y="190" width="150" height="150" fill="none" stroke="#B86540" stroke-width="1" opacity="0.22"/>
+        <rect x="155" y="220" width="90" height="90" fill="#B86540" opacity="0.08"/>
+        <line x1="20" y1="60" x2="60" y2="20" stroke="#8A7850" stroke-width="0.4" opacity="0.25"/>
+        <line x1="380" y1="60" x2="340" y2="20" stroke="#8A7850" stroke-width="0.4" opacity="0.25"/>
+        <line x1="20" y1="470" x2="60" y2="510" stroke="#8A7850" stroke-width="0.4" opacity="0.25"/>
+        <line x1="380" y1="470" x2="340" y2="510" stroke="#8A7850" stroke-width="0.4" opacity="0.25"/>
+      </svg>
+    </div>
+    <div class="product-card-info">
+      <p class="prod-element">Earth · Architecture · Grounding</p>
+      <h3 class="prod-name"><em>Terrae</em> — Foundation</h3>
+      <p class="feng-badge">Feng Shui: Centre / SW walls · Stability</p>
+      <p class="prod-desc">Geometric earth forms — sand, sienna, and umber — arranged with architectural precision. Grounds any interior, from minimalist homes to historical villas.</p>
+      <div class="prod-footer">
+        <p class="prod-price">€340–440/m²</p>
+        <button class="prod-add" onclick="addToCart('Terrae — Foundation','Earth · Made to order',380)">Enquire</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LUNARA -->
+  <div class="product-card" data-element="metal" id="lunara">
+    <div class="product-card-art">
+      <svg viewBox="0 0 400 530" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="530" fill="#20203A"/>
+        <circle cx="200" cy="220" r="150" fill="none" stroke="#D4C4E0" stroke-width="0.8" opacity="0.4"/>
+        <circle cx="200" cy="220" r="110" fill="none" stroke="#D4C4E0" stroke-width="0.6" opacity="0.3"/>
+        <circle cx="200" cy="220" r="72" fill="none" stroke="#D4C4E0" stroke-width="0.4" opacity="0.25"/>
+        <circle cx="200" cy="220" r="38" fill="#D4C4E0" opacity="0.1"/>
+        <path d="M168,220 Q200,175 232,220 Q200,265 168,220" fill="#F5F0F8" opacity="0.25"/>
+        <rect x="0" y="420" width="400" height="110" fill="#38306A" opacity="0.22"/>
+        <circle cx="80" cy="80" r="2.5" fill="#D4C4E0" opacity="0.5"/>
+        <circle cx="320" cy="380" r="2" fill="#D4C4E0" opacity="0.4"/>
+        <circle cx="50" cy="320" r="1.5" fill="#D4C4E0" opacity="0.35"/>
+        <circle cx="350" cy="110" r="3" fill="#D4C4E0" opacity="0.45"/>
+        <circle cx="160" cy="460" r="1.5" fill="#D4C4E0" opacity="0.3"/>
+        <circle cx="280" cy="480" r="1" fill="#D4C4E0" opacity="0.25"/>
+      </svg>
+    </div>
+    <div class="product-card-info">
+      <p class="prod-element">Moon · Cycles · Feminine</p>
+      <h3 class="prod-name"><em>Lunara</em> — Night Sky</h3>
+      <p class="feng-badge">Feng Shui: West / NW walls · Metal</p>
+      <p class="prod-desc">Deep indigo and violet grounds, with pale lunar crescents hand-rendered in silver-white pigment. For master suites, meditation rooms, and intimate spaces.</p>
+      <div class="prod-footer">
+        <p class="prod-price">€500–600/m²</p>
+        <button class="prod-add" onclick="addToCart('Lunara — Night Sky','Metal · Made to order',550)">Enquire</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AERIS -->
+  <div class="product-card" data-element="metal" id="aeris">
+    <div class="product-card-art">
+      <svg viewBox="0 0 400 530" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="530" fill="#EAECe8"/>
+        <line x1="0" y1="130" x2="400" y2="130" stroke="#C0C4B8" stroke-width="0.5" opacity="0.6"/>
+        <line x1="0" y1="265" x2="400" y2="265" stroke="#C0C4B8" stroke-width="0.5" opacity="0.6"/>
+        <line x1="0" y1="400" x2="400" y2="400" stroke="#C0C4B8" stroke-width="0.5" opacity="0.6"/>
+        <line x1="100" y1="0" x2="100" y2="530" stroke="#C0C4B8" stroke-width="0.5" opacity="0.4"/>
+        <line x1="200" y1="0" x2="200" y2="530" stroke="#C0C4B8" stroke-width="0.5" opacity="0.4"/>
+        <line x1="300" y1="0" x2="300" y2="530" stroke="#C0C4B8" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="200" cy="265" r="80" fill="none" stroke="#9AA09C" stroke-width="0.7" opacity="0.5"/>
+        <circle cx="200" cy="265" r="40" fill="none" stroke="#9AA09C" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="200" cy="265" r="8" fill="#9AA09C" opacity="0.3"/>
+        <ellipse cx="200" cy="265" rx="120" ry="30" fill="none" stroke="#9AA09C" stroke-width="0.4" opacity="0.3"/>
+      </svg>
+    </div>
+    <div class="product-card-info">
+      <p class="prod-element">Air · Breath · Minimalism</p>
+      <h3 class="prod-name"><em>Aeris</em> — White Breath</h3>
+      <p class="feng-badge">Feng Shui: West / NW walls · Clarity</p>
+      <p class="prod-desc">The most restrained of the collections. Barely visible lines and circular forms in chalk and pale sage. For contemporary interiors that prize silence.</p>
+      <div class="prod-footer">
+        <p class="prod-price">€300–380/m²</p>
+        <button class="prod-add" onclick="addToCart('Aeris — White Breath','Air · Made to order',340)">Enquire</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- IGNIS -->
+  <div class="product-card" data-element="fire" id="ignis">
+    <div class="product-card-art">
+      <svg viewBox="0 0 400 530" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="530" fill="#1E100A"/>
+        <path d="M200,500 Q160,380 200,300 Q240,380 200,500" fill="#B86540" opacity="0.6"/>
+        <path d="M200,480 Q175,380 200,310 Q225,380 200,480" fill="#C8974A" opacity="0.5"/>
+        <path d="M200,460 Q185,390 200,330 Q215,390 200,460" fill="#E8C070" opacity="0.4"/>
+        <path d="M150,530 Q120,420 150,350 Q180,420 150,530" fill="#B86540" opacity="0.35"/>
+        <path d="M250,530 Q220,420 250,360 Q280,420 250,530" fill="#B86540" opacity="0.35"/>
+        <path d="M100,530 Q80,450 100,390" fill="#8A3020" opacity="0.3"/>
+        <path d="M300,530 Q320,450 300,400" fill="#8A3020" opacity="0.3"/>
+        <circle cx="200" cy="290" r="25" fill="#E8C070" opacity="0.3"/>
+        <circle cx="200" cy="300" r="12" fill="#FAE090" opacity="0.25"/>
+        <rect x="0" y="480" width="400" height="50" fill="#0E0806" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="product-card-info">
+      <p class="prod-element">Fire · Intensity · Ritual</p>
+      <h3 class="prod-name"><em>Ignis</em> — Ember Glow</h3>
+      <p class="feng-badge">Feng Shui: South walls · Intense Yang</p>
+      <p class="prod-desc">Dark grounds alive with flame forms in amber, sienna, and pale gold. Dramatic and transformative — conceived for feature walls, bars, and ceremonial spaces.</p>
+      <div class="prod-footer">
+        <p class="prod-price">€500–600/m²</p>
+        <button class="prod-add" onclick="addToCart('Ignis — Ember Glow','Fire · Made to order',560)">Enquire</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERBAE -->
+  <div class="product-card" data-element="wood" id="herbae" style="grid-column: span 3">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--sand-deep)">
+      <div class="product-card-art" style="position:relative;aspect-ratio:16/9;">
+        <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;position:absolute;top:0;left:0;">
+          <rect width="700" height="400" fill="#D0DCB8"/>
+          <ellipse cx="120" cy="350" rx="80" ry="30" fill="#5C7A5E" opacity="0.5" transform="rotate(-15,120,350)"/>
+          <ellipse cx="160" cy="300" rx="65" ry="24" fill="#8A9E8C" opacity="0.45" transform="rotate(-25,160,300)"/>
+          <ellipse cx="90" cy="280" rx="50" ry="18" fill="#4A6A4C" opacity="0.4" transform="rotate(-35,90,280)"/>
+          <ellipse cx="250" cy="360" rx="70" ry="26" fill="#6A8A6C" opacity="0.4" transform="rotate(10,250,360)"/>
+          <ellipse cx="210" cy="310" rx="55" ry="20" fill="#8A9E8C" opacity="0.38" transform="rotate(-5,210,310)"/>
+          <ellipse cx="580" cy="360" rx="80" ry="30" fill="#5C7A5E" opacity="0.48" transform="rotate(18,580,360)"/>
+          <ellipse cx="540" cy="305" rx="65" ry="24" fill="#8A9E8C" opacity="0.4" transform="rotate(28,540,305)"/>
+          <ellipse cx="620" cy="280" rx="50" ry="18" fill="#4A6A4C" opacity="0.38" transform="rotate(38,620,280)"/>
+          <ellipse cx="450" cy="370" rx="70" ry="26" fill="#6A8A6C" opacity="0.38" transform="rotate(-8,450,370)"/>
+          <line x1="120" y1="350" x2="120" y2="100" stroke="#4A6A4C" stroke-width="1.5" opacity="0.3"/>
+          <line x1="250" y1="360" x2="250" y2="120" stroke="#4A6A4C" stroke-width="1.5" opacity="0.3"/>
+          <line x1="580" y1="360" x2="580" y2="100" stroke="#4A6A4C" stroke-width="1.5" opacity="0.3"/>
+          <line x1="450" y1="370" x2="450" y2="130" stroke="#4A6A4C" stroke-width="1.5" opacity="0.3"/>
+          <ellipse cx="350" cy="200" rx="55" ry="200" fill="#8A9E8C" opacity="0.08"/>
+        </svg>
+      </div>
+      <div class="product-card-info" style="padding:2.5rem;">
+        <p class="prod-element">Wood · Nature · Growth</p>
+        <h3 class="prod-name" style="font-size:2.2rem;"><em>Herbae</em> — Botanical Garden</h3>
+        <p class="feng-badge">Feng Shui: East / SE walls · Wood energy</p>
+        <p class="prod-desc" style="max-width:480px;">The most narrative of the collections. Dense botanical forms — leaves, fronds, stems — painted in layered sage, hunter green, and pale celadon. Transforms a wall into a living garden. Perfect for dining rooms, conservatories, and wellness interiors.</p>
+        <div class="prod-footer">
+          <p class="prod-price">€440–560/m²</p>
+          <button class="prod-add" onclick="addToCart('Herbae — Botanical Garden','Wood · Made to order',500)">Enquire</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SAMPLE REQUEST CTA -->
+<section class="section" style="background:var(--charcoal);text-align:center;">
+  <p class="section-eyebrow" style="color:var(--ochre);">Before You Decide</p>
+  <h2 class="section-title" style="color:var(--cream);margin-bottom:1.5rem;">Request a <em>sample panel</em></h2>
+  <p style="font-size:0.86rem;color:rgba(255,255,255,0.5);max-width:500px;margin:0 auto 2.5rem;line-height:2;">We send hand-painted sample panels (30×30cm) of any pattern so you can experience the texture, colour, and energy of the work in your actual space before committing.</p>
+  <a href="contact.html" class="btn-primary" style="background:var(--ochre);">Request a Sample</a>
+</section>
+
+<!-- SHARED ELEMENTS -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header"><h2 class="cart-title">Your Enquiry Cart</h2><button class="cart-close" onclick="closeCart()">✕</button></div>
+  <div class="cart-items" id="cartItems"><p class="cart-empty">Your cart is empty</p></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total-row"><span>Subtotal (indicative)</span><span id="cartSubtotal">€0</span></div>
+    <div class="cart-total-row"><span>Sample service</span><span>Included</span></div>
+    <div class="cart-grand-total"><span class="cart-grand-label">Enquiry Total</span><span class="cart-grand-price" id="cartTotal">€0</span></div>
+    <button class="btn-checkout" onclick="openCheckout()">Proceed to Enquiry</button>
+    <p class="cart-note">All orders are made-to-measure. Consultation follows within 48h.</p>
+  </div>
+</div>
+<div class="checkout-modal" id="checkoutModal">
+  <div class="checkout-modal-bg" onclick="closeCheckout()"></div>
+  <div class="checkout-box" id="checkoutBox">
+    <button class="checkout-close" onclick="closeCheckout()">✕</button>
+    <h2>Your Enquiry</h2>
+    <p class="checkout-sub">Complete your details and our founders will reach out within 48 hours.</p>
+    <div class="form-row"><div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" placeholder="Elena"></div><div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" placeholder="Moretti"></div></div>
+    <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="elena@studio.com"></div>
+    <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" placeholder="+39 ..."></div>
+    <p class="form-section-title">Project Details</p>
+    <div class="form-group"><label class="form-label">Space Type</label><input type="text" class="form-input" placeholder="Private residence / Boutique hotel..."></div>
+    <div class="form-row"><div class="form-group"><label class="form-label">Approx. Surface (m²)</label><input type="number" class="form-input" placeholder="25"></div><div class="form-group"><label class="form-label">Country</label><input type="text" class="form-input" placeholder="Italy"></div></div>
+    <div class="form-group"><label class="form-label">Tell us about the space</label><textarea class="form-input" rows="3" placeholder="Light, mood, element, timeline..."></textarea></div>
+    <div class="checkout-actions"><button class="btn-cancel" onclick="closeCheckout()">Back</button><button class="btn-place-order" onclick="placeOrder()">Send Enquiry →</button></div>
+  </div>
+</div>
+<div class="notif" id="notif"></div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand"><span class="footer-logo">Anavai</span><p class="footer-tagline">Artisanal wallpaper for spaces that hold meaning. Founded by two painters.</p><div class="footer-social"><a href="#" class="social-link">Instagram</a><a href="#" class="social-link">Pinterest</a></div></div>
+    <div><p class="footer-col-title">Collections</p><ul class="footer-links"><li><a href="#solara">Solara</a></li><li><a href="#undara">Undara</a></li><li><a href="#terrae">Terrae</a></li><li><a href="#lunara">Lunara</a></li><li><a href="#aeris">Aeris</a></li><li><a href="#ignis">Ignis</a></li><li><a href="#herbae">Herbae</a></li></ul></div>
+    <div><p class="footer-col-title">Studio</p><ul class="footer-links"><li><a href="process.html">Process</a></li><li><a href="designers.html">For Designers</a></li><li><a href="hotels.html">For Hotels</a></li></ul></div>
+    <div><p class="footer-col-title">Contact</p><ul class="footer-links"><li><a href="contact.html">studio@anavai.com</a></li><li><a href="contact.html">Request a Sample</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 Anavai. Handmade in Europe.</p></div>
+</footer>
+
+<script type="module" src="../assets/js/cart.js"></script>
+<script type="module" src="../assets/js/nav.js"></script>
+<script>
+function filterColl(element, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.product-card').forEach(card => {
+    if (element === 'all' || card.dataset.element === element) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+// Scroll to anchor
+const hash = window.location.hash;
+if (hash) {
+  setTimeout(() => {
+    const el = document.querySelector(hash);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 400);
+}
+</script>
+</body>
+</html>

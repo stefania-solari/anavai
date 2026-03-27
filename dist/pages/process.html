@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Process — Anavai</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+.process-full {
+  padding: 6rem 5rem;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: start;
+}
+.process-timeline { position: sticky; top: calc(var(--nav-h) + 2rem); }
+.timeline-nav { display: flex; flex-direction: column; gap: 0; margin-bottom: 3rem; }
+.tl-item {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 0; border-bottom: 1px solid var(--sand-deep);
+  cursor: pointer; transition: all 0.2s;
+}
+.tl-item:hover .tl-num, .tl-item.active .tl-num { color: var(--ochre); }
+.tl-item.active .tl-label { color: var(--charcoal); }
+.tl-num {
+  font-family: var(--font-display); font-size: 1.2rem; font-weight: 300;
+  color: var(--muted); min-width: 2rem; transition: color 0.2s;
+}
+.tl-label {
+  font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); font-weight: 400; transition: color 0.2s;
+}
+.timeline-cta { margin-top: 2rem; }
+.process-steps-detail { display: flex; flex-direction: column; gap: 5rem; }
+.proc-detail-step { padding-bottom: 5rem; border-bottom: 1px solid var(--sand-deep); }
+.proc-detail-step:last-child { border-bottom: none; }
+.proc-detail-num {
+  font-family: var(--font-display); font-size: 5rem; font-weight: 300;
+  color: var(--sand-deep); line-height: 1; margin-bottom: 1rem;
+}
+.proc-detail-title {
+  font-family: var(--font-display); font-size: 2.2rem; font-weight: 300;
+  color: var(--charcoal); margin-bottom: 1.5rem; line-height: 1.2;
+}
+.proc-detail-title em { font-style: italic; }
+.proc-detail-desc {
+  font-size: 0.86rem; line-height: 2.1; color: var(--muted);
+  max-width: 480px; font-weight: 300;
+}
+.proc-detail-art {
+  margin-top: 2rem; aspect-ratio: 4/3; position: relative;
+  background: var(--sand); overflow: hidden; max-width: 440px;
+}
+.proc-detail-art svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.proc-detail-facts { display: flex; gap: 3rem; margin-top: 2rem; flex-wrap: wrap; }
+.proc-fact { }
+.proc-fact-val {
+  font-family: var(--font-display); font-size: 2rem; font-weight: 300;
+  color: var(--charcoal); display: block;
+}
+.proc-fact-label { font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.sustainability-deep { padding: 6rem 5rem; background: var(--cream); }
+.sust-deep-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3rem; margin-top: 3.5rem; }
+.sust-deep-card { padding: 2rem 0; border-top: 2px solid var(--sage); }
+.sust-deep-title { font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 0.8rem; color: var(--charcoal); font-weight: 400; }
+.sust-deep-desc { font-size: 0.8rem; line-height: 1.9; color: var(--muted); font-weight: 300; }
+@media (max-width: 1024px) {
+  .process-full { grid-template-columns: 1fr; padding: 4rem 2.5rem; gap: 3rem; }
+  .process-timeline { position: static; }
+  .sustainability-deep { padding: 4rem 2.5rem; }
+  .sust-deep-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) { .sust-deep-grid { grid-template-columns: 1fr; } }
+</style>
+  <script type="module" crossorigin src="/assets/nav-BejPQc87.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/nav-ChCQye3_.css">
+</head>
+<body>
+<nav id="mainNav">
+  <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  <a href="../index.html" class="nav-logo">Anavai</a>
+  <ul class="nav-links"><li><a href="collections.html">Collections</a></li><li><a href="designers.html">For Designers</a></li><li><a href="hotels.html">For Hotels</a></li><li><a href="process.html">Process</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <div class="nav-right"><button class="cart-btn" id="cartToggle"><span class="cart-label">Cart</span><span class="cart-count" id="cartCount">0</span></button></div>
+</nav>
+<div class="mobile-nav-overlay" id="mobileNavOverlay"><div class="mobile-nav-inner"><a href="../index.html" class="mobile-nav-logo">Anavai</a><ul class="mobile-nav-links"><li><a href="collections.html">Collections</a></li><li><a href="designers.html">For Designers</a></li><li><a href="hotels.html">For Hotels</a></li><li><a href="process.html">Process</a></li><li><a href="contact.html">Contact</a></li></ul><div class="mobile-nav-footer"><p>studio@anavai.com</p></div></div></div>
+
+<div class="page-hero">
+  <p class="page-hero-eyebrow">The Ritual of Making</p>
+  <h1 class="page-hero-title">From <em>conversation</em><br>to installation</h1>
+  <p class="page-hero-sub">Every Anavai wall begins as a dialogue. We believe the process of making is as important as the result — and we share it openly with every client.</p>
+</div>
+
+<div class="process-full">
+  <div class="process-timeline">
+    <div class="timeline-nav">
+      <div class="tl-item active"><span class="tl-num">01</span><span class="tl-label">Consultation</span></div>
+      <div class="tl-item"><span class="tl-num">02</span><span class="tl-label">Design & Sample</span></div>
+      <div class="tl-item"><span class="tl-num">03</span><span class="tl-label">Hand-Painting</span></div>
+      <div class="tl-item"><span class="tl-num">04</span><span class="tl-label">Installation</span></div>
+    </div>
+    <p style="font-size:0.78rem;line-height:1.9;color:var(--muted);margin-bottom:2rem;font-weight:300;">Total lead time from first conversation to installation: 6–10 weeks depending on complexity and scale.</p>
+    <a href="contact.html" class="btn-primary" style="display:inline-block;text-decoration:none;">Begin a Project</a>
+  </div>
+  <div class="process-steps-detail">
+    <div class="proc-detail-step">
+      <p class="proc-detail-num">01</p>
+      <h2 class="proc-detail-title">Consultation &<br><em>Space Reading</em></h2>
+      <p class="proc-detail-desc">Before any pattern is discussed, we want to understand your space — its light, its proportions, its relationship to nature, and the energy you wish to cultivate within it. We do this through a detailed questionnaire followed by a video or in-person conversation with one of our founders.<br><br>We ask about the people who will inhabit the space, the function of each room, and what kind of transformation the wall should perform. Only then do we propose an element and a collection.</p>
+      <div class="proc-detail-art">
+        <svg viewBox="0 0 440 330" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect width="440" height="330" fill="#E8DDD0"/>
+          <line x1="0" y1="165" x2="440" y2="165" stroke="#C8974A" stroke-width="0.5" opacity="0.4"/>
+          <line x1="220" y1="0" x2="220" y2="330" stroke="#C8974A" stroke-width="0.5" opacity="0.4"/>
+          <circle cx="220" cy="165" r="80" fill="none" stroke="#C8974A" stroke-width="0.7" opacity="0.35"/>
+          <circle cx="220" cy="165" r="40" fill="#C8974A" opacity="0.12"/>
+          <circle cx="220" cy="165" r="15" fill="#B86540" opacity="0.22"/>
+        </svg>
+      </div>
+      <div class="proc-detail-facts">
+        <div class="proc-fact"><span class="proc-fact-val">1–2 hrs</span><span class="proc-fact-label">Consultation time</span></div>
+        <div class="proc-fact"><span class="proc-fact-val">Free</span><span class="proc-fact-label">No commitment</span></div>
+      </div>
+    </div>
+
+    <div class="proc-detail-step">
+      <p class="proc-detail-num">02</p>
+      <h2 class="proc-detail-title">Design Development<br>&amp; <em>Sample Panels</em></h2>
+      <p class="proc-detail-desc">Based on the consultation, our artists develop a pattern proposal — beginning with sketches and colour studies, moving to a hand-painted sample panel (30×30cm or 50×50cm) that we ship to you.<br><br>The sample lets you experience the real texture, light-response, and presence of the work in your actual space before any production begins. We refine through up to three rounds of feedback at no additional cost.</p>
+      <div class="proc-detail-art">
+        <svg viewBox="0 0 440 330" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect width="440" height="330" fill="#D2C39E"/>
+          <rect x="30" y="30" width="380" height="270" fill="none" stroke="#8A7850" stroke-width="0.6" opacity="0.4"/>
+          <rect x="80" y="80" width="280" height="170" fill="none" stroke="#8A7850" stroke-width="0.5" opacity="0.3"/>
+          <circle cx="220" cy="165" r="50" fill="#8A7850" opacity="0.15"/>
+          <rect x="145" y="90" width="150" height="150" fill="none" stroke="#B86540" stroke-width="1" opacity="0.2"/>
+        </svg>
+      </div>
+      <div class="proc-detail-facts">
+        <div class="proc-fact"><span class="proc-fact-val">7–14 days</span><span class="proc-fact-label">Sample delivery</span></div>
+        <div class="proc-fact"><span class="proc-fact-val">3</span><span class="proc-fact-label">Revision rounds</span></div>
+        <div class="proc-fact"><span class="proc-fact-val">Included</span><span class="proc-fact-label">No extra cost</span></div>
+      </div>
+    </div>
+
+    <div class="proc-detail-step">
+      <p class="proc-detail-num">03</p>
+      <h2 class="proc-detail-title">The Art of<br><em>Hand-Painting</em></h2>
+      <p class="proc-detail-desc">Once a sample is approved, we begin production. Each roll is painted by hand in our studio using water-based, eco-certified pigments on FSC-certified substrate. There is no mechanical reproduction — every mark is made by a human hand.<br><br>This means that no two panels are identical. The slight variations in stroke, texture, and pigment depth are what makes each installation alive — and what distinguishes Anavai from any industrially produced wallpaper.</p>
+      <div class="proc-detail-art">
+        <svg viewBox="0 0 440 330" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect width="440" height="330" fill="#EAD8B8"/>
+          <circle cx="220" cy="155" r="130" fill="none" stroke="#C8974A" stroke-width="0.8" opacity="0.28"/>
+          <circle cx="220" cy="155" r="90" fill="#C8974A" opacity="0.1"/>
+          <circle cx="220" cy="155" r="55" fill="#C8974A" opacity="0.18"/>
+          <circle cx="220" cy="155" r="28" fill="#B86540" opacity="0.28"/>
+          <g transform="translate(220,155)" opacity="0.25">
+            <line x1="0" y1="-130" x2="0" y2="-60" stroke="#C8974A" stroke-width="2"/><line x1="0" y1="-130" x2="0" y2="-60" stroke="#C8974A" stroke-width="2" transform="rotate(60)"/><line x1="0" y1="-130" x2="0" y2="-60" stroke="#C8974A" stroke-width="2" transform="rotate(120)"/><line x1="0" y1="-130" x2="0" y2="-60" stroke="#C8974A" stroke-width="2" transform="rotate(180)"/><line x1="0" y1="-130" x2="0" y2="-60" stroke="#C8974A" stroke-width="2" transform="rotate(240)"/><line x1="0" y1="-130" x2="0" y2="-60" stroke="#C8974A" stroke-width="2" transform="rotate(300)"/>
+          </g>
+        </svg>
+      </div>
+      <div class="proc-detail-facts">
+        <div class="proc-fact"><span class="proc-fact-val">4–6 weeks</span><span class="proc-fact-label">Production time</span></div>
+        <div class="proc-fact"><span class="proc-fact-val">Hand</span><span class="proc-fact-label">Every mark</span></div>
+        <div class="proc-fact"><span class="proc-fact-val">Unique</span><span class="proc-fact-label">Every panel</span></div>
+      </div>
+    </div>
+
+    <div class="proc-detail-step">
+      <p class="proc-detail-num">04</p>
+      <h2 class="proc-detail-title">Installation &<br><em>Handover</em></h2>
+      <p class="proc-detail-desc">We partner with specialist wallpaper installers across Europe who understand the fragility and precision required for hand-painted work. For significant commissions, one of our founders attends the installation to ensure the panels are placed with correct attention to light source, pattern alignment, and room proportion.<br><br>After installation we provide a care guide, leftover panel storage (offcuts are retained in our studio), and a certificate of authenticity for each commission.</p>
+      <div class="proc-detail-facts">
+        <div class="proc-fact"><span class="proc-fact-val">Included</span><span class="proc-fact-label">Care guide</span></div>
+        <div class="proc-fact"><span class="proc-fact-val">Cert.</span><span class="proc-fact-label">Of authenticity</span></div>
+        <div class="proc-fact"><span class="proc-fact-val">Europe</span><span class="proc-fact-label">Installation network</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUSTAINABILITY -->
+<section class="sustainability-deep">
+  <p class="section-eyebrow">Circular Luxury Craft</p>
+  <h2 class="section-title">How we make<br><em>responsibly</em></h2>
+  <div class="sust-deep-grid">
+    <div class="sust-deep-card">
+      <h3 class="sust-deep-title">Zero Overproduction</h3>
+      <p class="sust-deep-desc">We produce nothing without a confirmed order. No stock sits in a warehouse. Every panel is made for a specific wall in a specific room — zero waste by design.</p>
+    </div>
+    <div class="sust-deep-card">
+      <h3 class="sust-deep-title">FSC-Certified Materials</h3>
+      <p class="sust-deep-desc">All paper and substrate carries FSC certification. Our pigments are water-based and free from heavy metals. No solvents. No VOC off-gassing.</p>
+    </div>
+    <div class="sust-deep-card">
+      <h3 class="sust-deep-title">Local Artisan Network</h3>
+      <p class="sust-deep-desc">We source materials locally and work with artisans within 200km of our studio. Short supply chains mean lower transport emissions and stronger communities.</p>
+    </div>
+    <div class="sust-deep-card">
+      <h3 class="sust-deep-title">Offcut Upcycling</h3>
+      <p class="sust-deep-desc">Every scrap of hand-painted paper is transformed — into small artworks, custom packaging, or raw material for collaborators. Nothing is thrown away.</p>
+    </div>
+    <div class="sust-deep-card">
+      <h3 class="sust-deep-title">Longevity Over Trend</h3>
+      <p class="sust-deep-desc">Art-driven work doesn't date. Our patterns are not seasonal. A well-chosen Anavai wall is designed to be relevant — and beautiful — for decades.</p>
+    </div>
+    <div class="sust-deep-card">
+      <h3 class="sust-deep-title">Transparent Pricing</h3>
+      <p class="sust-deep-desc">We publish our price range openly. No hidden costs, no inflated markups for distributors. What you pay goes directly to artists and materials.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand"><span class="footer-logo">Anavai</span><p class="footer-tagline">Artisanal wallpaper for spaces that hold meaning.</p></div>
+    <div><p class="footer-col-title">Collections</p><ul class="footer-links"><li><a href="collections.html">All Collections</a></li></ul></div>
+    <div><p class="footer-col-title">Studio</p><ul class="footer-links"><li><a href="process.html">Process</a></li><li><a href="designers.html">For Designers</a></li><li><a href="hotels.html">For Hotels</a></li></ul></div>
+    <div><p class="footer-col-title">Contact</p><ul class="footer-links"><li><a href="contact.html">studio@anavai.com</a></li><li><a href="contact.html">Begin a Project</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 Anavai. Handmade in Europe.</p></div>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar"><div class="cart-header"><h2 class="cart-title">Your Enquiry Cart</h2><button class="cart-close" onclick="closeCart()">✕</button></div><div class="cart-items" id="cartItems"><p class="cart-empty">Your cart is empty</p></div><div class="cart-footer" id="cartFooter" style="display:none"><div class="cart-grand-total"><span class="cart-grand-label">Total</span><span class="cart-grand-price" id="cartTotal">€0</span></div><button class="btn-checkout" onclick="openCheckout()">Proceed to Enquiry</button></div></div>
+<div class="checkout-modal" id="checkoutModal"><div class="checkout-modal-bg" onclick="closeCheckout()"></div><div class="checkout-box" id="checkoutBox"><button class="checkout-close" onclick="closeCheckout()">✕</button><h2>Your Enquiry</h2><p class="checkout-sub">Our founders will reach out within 48 hours.</p><div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input"></div><div class="form-group"><label class="form-label">Project Details</label><textarea class="form-input" rows="4"></textarea></div><div class="checkout-actions"><button class="btn-cancel" onclick="closeCheckout()">Back</button><button class="btn-place-order" onclick="placeOrder()">Send →</button></div></div></div>
+<div class="notif" id="notif"></div>
+</body>
+</html>

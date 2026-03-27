@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Hotels — Anavai</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+.hotel-hero-split {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 70vh; padding-top: var(--nav-h);
+}
+.hotel-hero-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 5rem 4rem 5rem 5rem; background: var(--charcoal);
+}
+.hotel-hero-right { position: relative; background: var(--sand); overflow: hidden; }
+.spaces-section { padding: 6rem 5rem; }
+.spaces-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1.5px; background: var(--sand-deep);
+  margin-top: 3.5rem;
+}
+.space-card {
+  background: var(--cream); padding: 2rem 1.8rem;
+  border-bottom: 3px solid transparent; transition: border-color 0.3s;
+}
+.space-card:hover { border-bottom-color: var(--ochre); }
+.space-icon {
+  font-family: var(--font-display); font-size: 2.5rem; font-weight: 300;
+  color: var(--ochre); margin-bottom: 1rem; line-height: 1;
+}
+.space-name {
+  font-family: var(--font-display); font-size: 1.3rem; font-weight: 400;
+  color: var(--charcoal); margin-bottom: 0.5rem;
+}
+.space-coll {
+  font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--sage-deep); margin-bottom: 0.8rem;
+}
+.space-desc { font-size: 0.78rem; line-height: 1.85; color: var(--muted); font-weight: 300; }
+.case-section { padding: 6rem 5rem; background: var(--cream); }
+.case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3.5rem; }
+.case-card { overflow: hidden; }
+.case-art { aspect-ratio: 4/3; position: relative; overflow: hidden; }
+.case-art svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.case-info { padding: 1.8rem 0; }
+.case-tag {
+  font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ochre); margin-bottom: 0.6rem;
+}
+.case-name {
+  font-family: var(--font-display); font-size: 1.5rem; font-weight: 300;
+  color: var(--charcoal); margin-bottom: 0.5rem; line-height: 1.2;
+}
+.case-desc { font-size: 0.8rem; line-height: 1.85; color: var(--muted); font-weight: 300; }
+.wellness-element-section { padding: 6rem 5rem; }
+.we-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.element-map { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.elem-cell {
+  padding: 1.5rem; border: 1px solid var(--sand-deep);
+  transition: all 0.3s; cursor: default;
+}
+.elem-cell:hover { border-color: var(--ochre); background: var(--sand-light); }
+.elem-name {
+  font-family: var(--font-display); font-size: 1.3rem; font-weight: 300;
+  color: var(--charcoal); margin-bottom: 0.3rem; font-style: italic;
+}
+.elem-room { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+.hotel-cta { background: var(--charcoal); padding: 6rem 5rem; }
+.hotel-cta-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+.hotel-cta-text .section-title { color: var(--cream); }
+.hotel-cta-text .section-title em { color: var(--sage-light); }
+.hotel-cta-text .section-eyebrow { color: var(--ochre); }
+.hotel-cta-desc { font-size: 0.86rem; line-height: 2; color: rgba(255,255,255,0.5); margin-top: 1.5rem; margin-bottom: 2.5rem; max-width: 420px; }
+.hotel-form { display: flex; flex-direction: column; gap: 1rem; }
+.hotel-form .form-input { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); color: var(--cream); }
+.hotel-form .form-input::placeholder { color: rgba(255,255,255,0.3); }
+.hotel-form .form-label { color: rgba(255,255,255,0.4); }
+.hotel-form .btn-primary { background: var(--ochre); }
+.hotel-form .btn-primary:hover { background: var(--ochre-deep); }
+@media (max-width: 1024px) {
+  .hotel-hero-split { grid-template-columns: 1fr; }
+  .hotel-hero-left { padding: 4rem 2.5rem; min-height: 60vw; }
+  .hotel-hero-right { min-height: 55vw; }
+  .spaces-grid { grid-template-columns: repeat(2,1fr); }
+  .case-grid { grid-template-columns: 1fr; }
+  .we-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .hotel-cta-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .spaces-section, .case-section, .wellness-element-section, .hotel-cta { padding: 4rem 2.5rem; }
+}
+@media (max-width: 640px) { .spaces-grid { grid-template-columns: 1fr; } .element-map { grid-template-columns: 1fr; } }
+</style>
+  <script type="module" crossorigin src="/assets/nav-BejPQc87.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/nav-ChCQye3_.css">
+</head>
+<body>
+<nav id="mainNav">
+  <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  <a href="../index.html" class="nav-logo">Anavai</a>
+  <ul class="nav-links"><li><a href="collections.html">Collections</a></li><li><a href="designers.html">For Designers</a></li><li><a href="hotels.html">For Hotels</a></li><li><a href="process.html">Process</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <div class="nav-right"><button class="cart-btn" id="cartToggle"><span class="cart-label">Cart</span><span class="cart-count" id="cartCount">0</span></button></div>
+</nav>
+<div class="mobile-nav-overlay" id="mobileNavOverlay"><div class="mobile-nav-inner"><a href="../index.html" class="mobile-nav-logo">Anavai</a><ul class="mobile-nav-links"><li><a href="collections.html">Collections</a></li><li><a href="designers.html">For Designers</a></li><li><a href="hotels.html">For Hotels</a></li><li><a href="process.html">Process</a></li><li><a href="contact.html">Contact</a></li></ul><div class="mobile-nav-footer"><p>studio@anavai.com</p></div></div></div>
+
+<!-- HERO -->
+<div class="hotel-hero-split">
+  <div class="hotel-hero-left">
+    <p class="hero-eyebrow" style="color:var(--ochre);">Hospitality & Wellness</p>
+    <h1 class="hero-title" style="color:var(--cream);font-size:clamp(2.5rem,5vw,5rem);">Spaces guests<br><em style="color:var(--sage-light);">remember</em></h1>
+    <p class="hero-sub" style="color:rgba(255,255,255,0.5);">Art changes how people feel in a space — and how they remember a property. We work with boutique hotels, retreat centres, and wellness properties across Europe to create walls that define the guest experience.</p>
+    <a href="#hotel-contact" class="btn-primary" style="margin-top:1rem;display:inline-block;text-decoration:none;">Start a Conversation</a>
+  </div>
+  <div class="hotel-hero-right">
+    <svg viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+      <rect width="600" height="700" fill="#28263A"/>
+      <circle cx="300" cy="320" r="250" fill="none" stroke="#D4C4E0" stroke-width="0.8" opacity="0.35"/>
+      <circle cx="300" cy="320" r="180" fill="none" stroke="#D4C4E0" stroke-width="0.6" opacity="0.28"/>
+      <circle cx="300" cy="320" r="110" fill="#D4C4E0" opacity="0.06"/>
+      <path d="M260,320 Q300,265 340,320 Q300,375 260,320" fill="#F5F0F8" opacity="0.2"/>
+      <circle cx="90" cy="100" r="3" fill="#D4C4E0" opacity="0.5"/>
+      <circle cx="500" cy="550" r="2.5" fill="#D4C4E0" opacity="0.4"/>
+      <circle cx="60" cy="450" r="2" fill="#D4C4E0" opacity="0.35"/>
+      <circle cx="530" cy="160" r="3.5" fill="#D4C4E0" opacity="0.45"/>
+      <circle cx="180" cy="600" r="2" fill="#D4C4E0" opacity="0.3"/>
+      <rect x="0" y="580" width="600" height="120" fill="#38306A" opacity="0.2"/>
+    </svg>
+    <div class="hero-badge">
+      <span>Recommended for</span>
+      <strong>Master Suites & Spas</strong>
+    </div>
+  </div>
+</div>
+
+<!-- SPACES WE SERVE -->
+<section class="spaces-section">
+  <p class="section-eyebrow">Where Anavai Lives</p>
+  <h2 class="section-title">The right element<br>for every <em>space</em></h2>
+  <div class="spaces-grid">
+    <div class="space-card">
+      <p class="space-icon">◉</p>
+      <h3 class="space-name">Lobby & Entrance</h3>
+      <p class="space-coll">Recommended: Solara</p>
+      <p class="space-desc">The first impression defines the entire stay. Bold, luminous patterns that communicate the hotel's identity from the first step inside.</p>
+    </div>
+    <div class="space-card">
+      <p class="space-icon">〜</p>
+      <h3 class="space-name">Spa & Wellness</h3>
+      <p class="space-coll">Recommended: Undara</p>
+      <p class="space-desc">Water-element patterns calibrated for spaces of rest, treatment, and sensory retreat. Guest feedback consistently describes a sense of calm and depth.</p>
+    </div>
+    <div class="space-card">
+      <p class="space-icon">◐</p>
+      <h3 class="space-name">Master Suites</h3>
+      <p class="space-coll">Recommended: Lunara</p>
+      <p class="space-desc">Dark, celestial patterns for the most intimate spaces. Creates a sense of sanctuary and transforms the bedroom into a destination in itself.</p>
+    </div>
+    <div class="space-card">
+      <p class="space-icon">▪</p>
+      <h3 class="space-name">Dining Room</h3>
+      <p class="space-coll">Recommended: Herbae or Ignis</p>
+      <p class="space-desc">Botanical abundance or flame-lit drama — dining walls should charge the atmosphere. Guests photograph them, remember them, and return for them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="case-section">
+  <p class="section-eyebrow">In Situ</p>
+  <h2 class="section-title">Where we've<br><em>worked</em></h2>
+  <div class="case-grid">
+    <div class="case-card">
+      <div class="case-art">
+        <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect width="480" height="360" fill="#EAD8B8"/>
+          <circle cx="240" cy="170" r="160" fill="none" stroke="#C8974A" stroke-width="0.7" opacity="0.28"/>
+          <circle cx="240" cy="170" r="110" fill="#C8974A" opacity="0.1"/>
+          <circle cx="240" cy="170" r="65" fill="#C8974A" opacity="0.18"/>
+          <circle cx="240" cy="170" r="36" fill="#B86540" opacity="0.26"/>
+          <g transform="translate(240,170)" opacity="0.25">
+            <line x1="0" y1="-160" x2="0" y2="-75" stroke="#C8974A" stroke-width="2"/><line x1="0" y1="-160" x2="0" y2="-75" stroke="#C8974A" stroke-width="2" transform="rotate(45)"/><line x1="0" y1="-160" x2="0" y2="-75" stroke="#C8974A" stroke-width="2" transform="rotate(90)"/><line x1="0" y1="-160" x2="0" y2="-75" stroke="#C8974A" stroke-width="2" transform="rotate(135)"/><line x1="0" y1="-160" x2="0" y2="-75" stroke="#C8974A" stroke-width="2" transform="rotate(180)"/><line x1="0" y1="-160" x2="0" y2="-75" stroke="#C8974A" stroke-width="2" transform="rotate(225)"/><line x1="0" y1="-160" x2="0" y2="-75" stroke="#C8974A" stroke-width="2" transform="rotate(270)"/><line x1="0" y1="-160" x2="0" y2="-75" stroke="#C8974A" stroke-width="2" transform="rotate(315)"/>
+          </g>
+        </svg>
+      </div>
+      <div class="case-info">
+        <p class="case-tag">Ibiza · Boutique Hotel · 2024</p>
+        <h3 class="case-name">Entrance Hall — Solara Collection</h3>
+        <p class="case-desc">42m² of Golden Light pattern across three walls and a vaulted ceiling. The client requested an installation that "stopped guests in their tracks." Monthly review scores for lobby experience increased by 18 points post-installation.</p>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-art">
+        <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect width="480" height="360" fill="#C0D5D5"/>
+          <path d="M0,100 Q120,65 240,100 Q360,135 480,100 L480,360 L0,360 Z" fill="#8AACAC" opacity="0.42"/>
+          <path d="M0,150 Q120,118 240,150 Q360,182 480,150 L480,360 L0,360 Z" fill="#6A9898" opacity="0.38"/>
+          <path d="M0,205 Q120,185 240,205 Q360,225 480,205 L480,360 L0,360 Z" fill="#4A7878" opacity="0.32"/>
+          <ellipse cx="240" cy="65" rx="60" ry="20" fill="white" opacity="0.16"/>
+        </svg>
+      </div>
+      <div class="case-info">
+        <p class="case-tag">Tuscany · Wellness Retreat · 2024</p>
+        <h3 class="case-name">Treatment Wing — Undara Collection</h3>
+        <p class="case-desc">Six treatment rooms, each with a single Undara feature wall in a bespoke shade matched to the room's hydrotherapy palette. Staff report that guests consistently fall asleep during treatments — which they consider the highest compliment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ELEMENT MAP -->
+<section class="wellness-element-section">
+  <div class="we-inner">
+    <div>
+      <p class="section-eyebrow">Feng Shui Application</p>
+      <h2 class="section-title">Designing with<br><em>intention</em></h2>
+      <p style="font-size:0.86rem;line-height:2;color:var(--muted);margin-top:1.5rem;max-width:400px;">Every Anavai collection is mapped to the five Feng Shui elements. This allows us to work with you to select patterns that reinforce the intended energy of each space — not just aesthetically, but energetically.</p>
+      <a href="contact.html" class="btn-ghost" style="margin-top:2rem;display:inline-block;">Discuss your property →</a>
+    </div>
+    <div>
+      <div class="element-map">
+        <div class="elem-cell">
+          <p class="elem-name">Solara &amp; Ignis</p>
+          <p class="elem-room">Fire — Lobby · Dining · Bar</p>
+        </div>
+        <div class="elem-cell">
+          <p class="elem-name">Herbae</p>
+          <p class="elem-room">Wood — Restaurant · Garden Room</p>
+        </div>
+        <div class="elem-cell">
+          <p class="elem-name">Undara</p>
+          <p class="elem-room">Water — Spa · Pool · Treatment</p>
+        </div>
+        <div class="elem-cell">
+          <p class="elem-name">Terrae</p>
+          <p class="elem-room">Earth — Suites · Library · Lounge</p>
+        </div>
+        <div class="elem-cell" style="grid-column:span 2;">
+          <p class="elem-name">Lunara &amp; Aeris</p>
+          <p class="elem-room">Metal — Master Suites · Meditation · Private Dining</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOTEL CTA FORM -->
+<div class="hotel-cta" id="hotel-contact">
+  <div class="hotel-cta-inner">
+    <div class="hotel-cta-text">
+      <p class="section-eyebrow">Begin the Conversation</p>
+      <h2 class="section-title">Let's design<br><em>your property</em></h2>
+      <p class="hotel-cta-desc">We visit properties by appointment across Europe. Tell us about your hotel or retreat and we'll prepare a tailored presentation with element mapping and preliminary pattern proposals.</p>
+    </div>
+    <div class="hotel-form">
+      <div class="form-group"><label class="form-label">Property Name</label><input type="text" class="form-input" placeholder="Hotel Villa Serena"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Location</label><input type="text" class="form-input" placeholder="Ibiza, Spain"></div>
+        <div class="form-group"><label class="form-label">No. of Rooms</label><input type="number" class="form-input" placeholder="24"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Your Name & Role</label><input type="text" class="form-input" placeholder="Anna Ferrari, General Manager"></div>
+      <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="anna@hotelvillaserena.com"></div>
+      <div class="form-group"><label class="form-label">Spaces of Interest</label><textarea class="form-input" rows="3" placeholder="Lobby, spa, suite wing..."></textarea></div>
+      <button class="btn-primary" onclick="showNotif('Enquiry received. We will reach out within 48 hours.')">Send Property Enquiry →</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand"><span class="footer-logo">Anavai</span><p class="footer-tagline">Artisanal wallpaper for spaces that hold meaning.</p></div>
+    <div><p class="footer-col-title">Collections</p><ul class="footer-links"><li><a href="collections.html">All Collections</a></li></ul></div>
+    <div><p class="footer-col-title">Studio</p><ul class="footer-links"><li><a href="process.html">Process</a></li><li><a href="designers.html">For Designers</a></li><li><a href="hotels.html">For Hotels</a></li></ul></div>
+    <div><p class="footer-col-title">Contact</p><ul class="footer-links"><li><a href="contact.html">studio@anavai.com</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 Anavai. Handmade in Europe.</p></div>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar"><div class="cart-header"><h2 class="cart-title">Your Enquiry Cart</h2><button class="cart-close" onclick="closeCart()">✕</button></div><div class="cart-items" id="cartItems"><p class="cart-empty">Your cart is empty</p></div><div class="cart-footer" id="cartFooter" style="display:none"><div class="cart-grand-total"><span class="cart-grand-label">Total</span><span class="cart-grand-price" id="cartTotal">€0</span></div><button class="btn-checkout" onclick="openCheckout()">Proceed to Enquiry</button></div></div>
+<div class="checkout-modal" id="checkoutModal"><div class="checkout-modal-bg" onclick="closeCheckout()"></div><div class="checkout-box" id="checkoutBox"><button class="checkout-close" onclick="closeCheckout()">✕</button><h2>Your Enquiry</h2><p class="checkout-sub">Our founders will reach out within 48 hours.</p><div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input"></div><div class="form-group"><label class="form-label">Project Details</label><textarea class="form-input" rows="4"></textarea></div><div class="checkout-actions"><button class="btn-cancel" onclick="closeCheckout()">Back</button><button class="btn-place-order" onclick="placeOrder()">Send →</button></div></div></div>
+<div class="notif" id="notif"></div>
+</body>
+</html>
