@@ -13,6 +13,7 @@ create table if not exists public.enquiries (
   sample_requested text,
   budget text,
   message text,
+  status text not null default 'new',
   currency text default 'EUR',
   cart_total numeric(12,2) default 0,
   cart_items jsonb not null default '[]'::jsonb,
@@ -22,6 +23,7 @@ create table if not exists public.enquiries (
 create index if not exists enquiries_created_at_idx on public.enquiries (created_at desc);
 create index if not exists enquiries_email_idx on public.enquiries (email);
 create index if not exists enquiries_source_idx on public.enquiries (source);
+create index if not exists enquiries_status_idx on public.enquiries (status);
 
 -- Optional: restrict table access to service role only.
 alter table public.enquiries enable row level security;
@@ -42,3 +44,16 @@ create policy "Allow insert from API" on public.enquiries
     and source is not null
     and length(source) > 0
   );
+
+drop policy if exists "Allow read for authenticated" on public.enquiries;
+create policy "Allow read for authenticated" on public.enquiries
+  for select
+  to authenticated
+  using (true);
+
+drop policy if exists "Allow update for authenticated" on public.enquiries;
+create policy "Allow update for authenticated" on public.enquiries
+  for update
+  to authenticated
+  using (true)
+  with check (true);

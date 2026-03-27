@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Anavai</title>
+<meta name="description" content="Anavai admin dashboard for enquiries management.">
+<link rel="canonical" href="https://anavai.com/pages/admin.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.admin-wrap { padding: calc(var(--nav-h) + 2rem) 2.5rem 3rem; min-height: 100vh; background: var(--warm-white); }
+.admin-card { background: white; border: 1px solid var(--sand-deep); padding: 1.5rem; margin-bottom: 1rem; }
+.admin-head { display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-bottom:1rem; flex-wrap:wrap; }
+.admin-title { font-family: var(--font-display); font-size: 2rem; font-weight: 300; }
+.admin-toolbar { display:flex; gap:0.75rem; flex-wrap:wrap; }
+.admin-table-wrap { overflow:auto; }
+table.admin-table { width: 100%; border-collapse: collapse; min-width: 980px; }
+.admin-table th, .admin-table td { text-align:left; font-size:0.73rem; padding:0.7rem 0.6rem; border-bottom:1px solid var(--sand); vertical-align:top; }
+.admin-table th { letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); font-size:0.6rem; }
+.lead-status { font-size:0.7rem; padding:0.3rem; border:1px solid var(--sand-deep); background:white; }
+.admin-note { font-size:0.72rem; color:var(--muted); line-height:1.8; }
+</style>
+</head>
+<body>
+<nav id="mainNav">
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <a href="../index.html" class="nav-logo">Anavai</a>
+  <ul class="nav-links"><li><a href="collections.html">Collections</a></li><li><a href="designers.html">For Designers</a></li><li><a href="hotels.html">For Hotels</a></li><li><a href="process.html">Process</a></li><li><a href="contact.html">Contact</a></li></ul>
+</nav>
+<div class="mobile-nav-overlay" id="mobileNavOverlay"><div class="mobile-nav-inner"><a href="../index.html" class="mobile-nav-logo">Anavai</a><ul class="mobile-nav-links"><li><a href="collections.html">Collections</a></li><li><a href="designers.html">For Designers</a></li><li><a href="hotels.html">For Hotels</a></li><li><a href="process.html">Process</a></li><li><a href="contact.html">Contact</a></li></ul></div></div>
+
+<main class="admin-wrap">
+  <section id="adminAuth" class="admin-card">
+    <p class="page-hero-eyebrow">Admin Access</p>
+    <h1 class="admin-title">Sign in with Magic Link</h1>
+    <p class="admin-note" style="margin:0.8rem 0 1.2rem;">Use an email account enabled in your Supabase Auth users list.</p>
+    <div class="form-row" style="max-width:540px;">
+      <div class="form-group"><label class="form-label">Email</label><input id="adminEmail" type="email" class="form-input" placeholder="studio@anavai.com"></div>
+    </div>
+    <button id="sendMagicLinkBtn" class="btn-primary">Send Magic Link</button>
+  </section>
+
+  <section id="adminApp" class="admin-card" style="display:none;">
+    <div class="admin-head">
+      <div>
+        <p class="page-hero-eyebrow">Dashboard</p>
+        <h2 class="admin-title" style="font-size:1.8rem;">Enquiries (<span id="enquiriesCount">0</span>)</h2>
+        <p class="admin-note">Logged in as <strong id="adminUserEmail"></strong></p>
+      </div>
+      <div class="admin-toolbar">
+        <select id="statusFilter" class="form-input" style="width:auto;min-width:160px;">
+          <option value="all">All statuses</option>
+          <option value="new">new</option>
+          <option value="qualified">qualified</option>
+          <option value="quoted">quoted</option>
+          <option value="won">won</option>
+          <option value="lost">lost</option>
+        </select>
+        <button id="refreshLeadsBtn" class="btn-ghost">Refresh</button>
+        <button id="signOutBtn" class="btn-primary">Sign out</button>
+      </div>
+    </div>
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Created</th>
+            <th>Email</th>
+            <th>Source</th>
+            <th>Type</th>
+            <th>Country</th>
+            <th>Total</th>
+            <th>Items</th>
+            <th>Status</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody id="enquiriesBody"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<div class="notif" id="adminToast"></div>
+<script type="module" src="../assets/js/nav.js"></script>
+<script type="module" src="../assets/js/admin.js"></script>
+</body>
+</html>

@@ -13,6 +13,7 @@ Run Anavai as an enquiry-first ecommerce site using only free tiers:
 - DB: Supabase Postgres (table `enquiries`)
 - Emails: Resend API (optional, free tier)
 - Tracking: `dataLayer` events from `assets/js/ecommerce.js` and cart/contact flows
+- Admin dashboard: `pages/admin.html` + Supabase Auth magic link
 
 ## Why this stack
 - No monthly platform fee
@@ -30,6 +31,9 @@ Run Anavai as an enquiry-first ecommerce site using only free tiers:
   - `assets/js/ecommerce.js`
 - Runtime config example:
   - `assets/js/anavai-config.example.js`
+- Admin UI:
+  - `pages/admin.html`
+  - `assets/js/admin.js`
 
 ## Setup Steps
 1. Create Supabase project (free).

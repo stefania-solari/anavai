@@ -15,6 +15,7 @@ export default defineConfig({
         terms: resolve(__dirname, "pages/terms.html"),
         sustainability: resolve(__dirname, "pages/sustainability.html"),
         press: resolve(__dirname, "pages/press.html"),
+        admin: resolve(__dirname, "pages/admin.html"),
       },
     },
   },

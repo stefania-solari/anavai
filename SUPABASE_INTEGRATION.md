@@ -8,6 +8,8 @@ This project is already wired for Supabase through the Cloudflare Worker:
 - Create a new project in Supabase.
 - Open SQL Editor and run:
   - `backend/supabase/schema.sql`
+- In Auth settings, enable Email provider (magic link).
+- Create at least one admin user (Auth > Users) with your email.
 
 ## 2) Worker Local Secrets
 From `backend/worker`:
@@ -53,7 +55,9 @@ Edit `assets/js/anavai-config.js`:
 const DEFAULT_CONFIG = {
   currency: "EUR",
   demoMode: false,
-  enquiryEndpoint: "http://127.0.0.1:8787/api/enquiry"
+  enquiryEndpoint: "http://127.0.0.1:8787/api/enquiry",
+  supabaseUrl: "https://YOUR_PROJECT_REF.supabase.co",
+  supabaseAnonKey: "YOUR_SUPABASE_PUBLISHABLE_KEY"
 };
 ```
 
@@ -79,6 +83,11 @@ npx wrangler deploy
 In Table Editor (`public.enquiries`), confirm rows are created after:
 - contact form submit
 - checkout enquiry submit
+
+## 7) Admin Dashboard
+- Open `pages/admin.html`
+- Sign in with magic link
+- View/filter enquiries and update status (`new`, `qualified`, `quoted`, `won`, `lost`)
 
 ## Notes
 - Keep `SUPABASE_SERVICE_ROLE_KEY` only in Worker secrets.
