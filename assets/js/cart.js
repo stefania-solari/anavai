@@ -1,6 +1,7 @@
 /* cart.js — shared cart logic for Anavai */
 (function() {
   let cart = JSON.parse(sessionStorage.getItem('anavai_cart') || '[]');
+  let lastCount = cart.reduce((s, i) => s + i.qty, 0);
 
   function saveCart() {
     sessionStorage.setItem('anavai_cart', JSON.stringify(cart));
@@ -43,7 +44,15 @@
 
   function updateCartUI() {
     const count = cart.reduce((s, i) => s + i.qty, 0);
-    document.querySelectorAll('#cartCount').forEach(el => el.textContent = count);
+    document.querySelectorAll('#cartCount').forEach(el => {
+      el.textContent = count;
+      if (count !== lastCount) {
+        el.classList.remove('bump');
+        void el.offsetWidth;
+        el.classList.add('bump');
+      }
+    });
+    lastCount = count;
 
     const itemsEl = document.getElementById('cartItems');
     const footer  = document.getElementById('cartFooter');
