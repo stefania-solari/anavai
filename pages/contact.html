@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact — Anavai</title>
+<meta name="description" content="Contact Anavai for private, trade, and hospitality wallpaper projects.">
+<link rel="canonical" href="https://anavai.com/pages/contact.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact — Anavai">
+<meta property="og:description" content="Start your made-to-order wallpaper project with Anavai.">
+<meta property="og:url" content="https://anavai.com/pages/contact.html">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/style.css">
 <style>
@@ -105,9 +111,9 @@
       <div class="contact-item">
         <p class="contact-item-label">Follow the Studio</p>
         <div class="contact-social">
-          <a href="#" class="contact-social-link">Instagram</a>
-          <a href="#" class="contact-social-link">Pinterest</a>
-          <a href="#" class="contact-social-link">LinkedIn</a>
+          <a href="https://instagram.com" class="contact-social-link" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://pinterest.com" class="contact-social-link" target="_blank" rel="noopener">Pinterest</a>
+          <a href="https://linkedin.com" class="contact-social-link" target="_blank" rel="noopener">LinkedIn</a>
         </div>
       </div>
     </div>
@@ -171,6 +177,7 @@
 <div class="cart-sidebar" id="cartSidebar"><div class="cart-header"><h2 class="cart-title">Your Enquiry Cart</h2><button class="cart-close" onclick="closeCart()">✕</button></div><div class="cart-items" id="cartItems"><p class="cart-empty">Your cart is empty</p></div><div class="cart-footer" id="cartFooter" style="display:none"><div class="cart-grand-total"><span class="cart-grand-label">Total</span><span class="cart-grand-price" id="cartTotal">€0</span></div><button class="btn-checkout" onclick="openCheckout()">Proceed to Enquiry</button></div></div>
 <div class="checkout-modal" id="checkoutModal"><div class="checkout-modal-bg" onclick="closeCheckout()"></div><div class="checkout-box" id="checkoutBox"><button class="checkout-close" onclick="closeCheckout()">✕</button><h2>Your Enquiry</h2><div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input"></div><div class="form-group"><label class="form-label">Project Details</label><textarea class="form-input" rows="4"></textarea></div><div class="checkout-actions"><button class="btn-cancel" onclick="closeCheckout()">Back</button><button class="btn-place-order" onclick="placeOrder()">Send →</button></div></div></div>
 <div class="notif" id="notif"></div>
+<script type="module" src="../assets/js/ecommerce.js"></script>
 <script type="module" src="../assets/js/cart.js"></script><script type="module" src="../assets/js/nav.js"></script>
 <script>
 function selectType(btn) {
@@ -178,15 +185,62 @@ function selectType(btn) {
   btn.classList.add('active');
 }
 function submitContact() {
-  const form = document.querySelector('.contact-right');
-  form.innerHTML = `
-    <div style="text-align:center;padding:4rem 2rem;">
-      <p style="font-family:var(--font-display);font-size:4rem;font-weight:300;color:var(--ochre);margin-bottom:1.5rem;">✦</p>
-      <h2 style="font-family:var(--font-display);font-size:2.5rem;font-weight:300;color:var(--charcoal);margin-bottom:1rem;">Message Received</h2>
-      <p style="font-size:0.86rem;line-height:2;color:var(--muted);max-width:380px;margin:0 auto 2rem;">Thank you for reaching out. A founder will read your message personally and respond within 48 hours.<br><br>In the meantime, you're welcome to explore our collections.</p>
-      <a href="collections.html" class="btn-primary" style="display:inline-block;text-decoration:none;">Explore Collections</a>
-    </div>
-  `;
+  const root = document.querySelector('.contact-right');
+  const btn = root.querySelector('.btn-primary');
+  const values = {};
+  root.querySelectorAll('.form-input').forEach((el, idx) => {
+    const key = (el.previousElementSibling?.textContent || el.placeholder || `field_${idx}`)
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_|_$/g, '');
+    values[key || `field_${idx}`] = el.value?.trim() || '';
+  });
+  values.client_type = document.querySelector('.type-btn.active')?.textContent?.trim() || '';
+  values.sample_requested = document.getElementById('sample')?.checked ? 'yes' : 'no';
+
+  if (!values.email) {
+    if (window.showNotif) showNotif('Please add your email before sending');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  const payload = {
+    source: 'contact_page',
+    submitted_at: new Date().toISOString(),
+    fields: values,
+  };
+
+  const done = (mode) => {
+    if (window.anavaiEcom?.track) {
+      window.anavaiEcom.track('generate_lead', payload);
+      window.anavaiEcom.track('contact_submit', { mode, client_type: values.client_type || 'unknown' });
+    }
+    root.innerHTML = `
+      <div style="text-align:center;padding:4rem 2rem;">
+        <p style="font-family:var(--font-display);font-size:4rem;font-weight:300;color:var(--ochre);margin-bottom:1.5rem;">✦</p>
+        <h2 style="font-family:var(--font-display);font-size:2.5rem;font-weight:300;color:var(--charcoal);margin-bottom:1rem;">Message Received</h2>
+        <p style="font-size:0.86rem;line-height:2;color:var(--muted);max-width:420px;margin:0 auto 2rem;">Thank you for reaching out. A founder will read your message personally and respond within 48 hours.<br><br>${mode === 'demo' ? 'Demo mode is active: configure <code>window.ANAVAI_CONFIG.enquiryEndpoint</code> to send to CRM/Shopify.' : 'Your request has been sent to our intake system.'}</p>
+        <a href="collections.html" class="btn-primary" style="display:inline-block;text-decoration:none;">Explore Collections</a>
+      </div>
+    `;
+  };
+
+  if (window.anavaiEcom?.sendEnquiry) {
+    window.anavaiEcom
+      .sendEnquiry(payload)
+      .then((res) => done(res.mode || 'endpoint'))
+      .catch(() => {
+        btn.disabled = false;
+        btn.textContent = 'Send Message →';
+        if (window.showNotif) showNotif('Unable to send message. Please try again.');
+      });
+    return;
+  }
+
+  done('demo');
 }
 </script>
 </body>

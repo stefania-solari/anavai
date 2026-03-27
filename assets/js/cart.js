@@ -2,9 +2,58 @@
 (function() {
   let cart = JSON.parse(sessionStorage.getItem('anavai_cart') || '[]');
   let lastCount = cart.reduce((s, i) => s + i.qty, 0);
+  const PRODUCT_MAP = {
+    'Solara — Golden Light No.1': { item_id: 'solara-golden-light-01', item_name: 'Solara Golden Light No.1' },
+    'Solara — Golden Light': { item_id: 'solara-golden-light', item_name: 'Solara Golden Light' },
+    'Undara — Still Waters': { item_id: 'undara-still-waters', item_name: 'Undara Still Waters' },
+    'Terrae — Foundation': { item_id: 'terrae-foundation', item_name: 'Terrae Foundation' },
+    'Lunara — Night Sky': { item_id: 'lunara-night-sky', item_name: 'Lunara Night Sky' },
+    'Aeris — White Breath': { item_id: 'aeris-white-breath', item_name: 'Aeris White Breath' },
+    'Ignis — Ember Glow': { item_id: 'ignis-ember-glow', item_name: 'Ignis Ember Glow' },
+    'Herbae — Botanical Garden': { item_id: 'herbae-botanical-garden', item_name: 'Herbae Botanical Garden' },
+  };
 
   function saveCart() {
     sessionStorage.setItem('anavai_cart', JSON.stringify(cart));
+  }
+
+  function trackEcom(eventName, payload) {
+    if (window.anavaiEcom?.track) window.anavaiEcom.track(eventName, payload);
+  }
+
+  function mapItems(items) {
+    return items.map(item => {
+      const mapped = PRODUCT_MAP[item.name] || { item_id: item.name.toLowerCase().replace(/\s+/g, '-'), item_name: item.name };
+      return {
+        ...mapped,
+        price: item.price,
+        quantity: item.qty,
+        item_variant: item.detail,
+      };
+    });
+  }
+
+  function buildCheckoutPayload() {
+    const box = document.getElementById('checkoutBox');
+    if (!box) return null;
+    const fields = {};
+    box.querySelectorAll('input, textarea, select').forEach((el, idx) => {
+      const key = (el.previousElementSibling?.textContent || el.placeholder || `field_${idx}`)
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '_')
+        .replace(/^_|_$/g, '');
+      fields[key || `field_${idx}`] = el.value?.trim() || '';
+    });
+    return {
+      source: 'cart_checkout_modal',
+      submitted_at: new Date().toISOString(),
+      currency: window.anavaiEcom?.currency || 'EUR',
+      customer: fields,
+      cart_items: mapItems(cart),
+      cart_total: cart.reduce((s, i) => s + i.price * i.qty, 0),
+      note: 'Made-to-order enquiry',
+    };
   }
 
   window.addToCart = function(name, detail, price) {
@@ -18,6 +67,11 @@
     updateCartUI();
     showNotif('"' + name + '" added to enquiry');
     openCart();
+    trackEcom('add_to_cart', {
+      currency: window.anavaiEcom?.currency || 'EUR',
+      value: price,
+      items: mapItems([{ name, detail, price, qty: 1 }]),
+    });
   };
 
   window.removeFromCart = function(idx) {
@@ -101,26 +155,67 @@
     closeCart();
     document.getElementById('checkoutModal')?.classList.add('open');
     document.body.style.overflow = 'hidden';
+    trackEcom('begin_checkout', {
+      currency: window.anavaiEcom?.currency || 'EUR',
+      value: cart.reduce((s, i) => s + i.price * i.qty, 0),
+      items: mapItems(cart),
+    });
   };
   window.closeCheckout = function() {
     document.getElementById('checkoutModal')?.classList.remove('open');
     document.body.style.overflow = '';
   };
 
-  window.placeOrder = function() {
+  window.clearCart = function() {
+    cart = [];
+    saveCart();
+    updateCartUI();
+  };
+
+  window.placeOrder = async function() {
     const box = document.getElementById('checkoutBox');
     if (!box) return;
+    const payload = buildCheckoutPayload();
+    const email = payload?.customer?.email || payload?.customer?.email_address || '';
+    if (!email) {
+      showNotif('Please add an email before sending');
+      return;
+    }
+    const cta = box.querySelector('.btn-place-order');
+    if (cta) {
+      cta.disabled = true;
+      cta.textContent = 'Sending...';
+    }
+    let mode = 'demo';
+    try {
+      if (window.anavaiEcom?.sendEnquiry && payload) {
+        const res = await window.anavaiEcom.sendEnquiry(payload);
+        mode = res.mode || 'endpoint';
+      }
+    } catch (err) {
+      if (cta) {
+        cta.disabled = false;
+        cta.textContent = 'Send Enquiry →';
+      }
+      showNotif('Unable to send enquiry. Please try again.');
+      return;
+    }
     box.innerHTML = `
       <div class="order-confirm">
         <span class="confirm-mark">✦</span>
         <h2>Enquiry Received</h2>
-        <p>Thank you. Our founders will review your project and reach out personally within 48 hours to begin the conversation.<br><br>In the meantime, we are preparing a tailored sample proposal for your space.</p>
-        <button onclick="closeCheckout(); cart=[]; saveCart && saveCart(); updateCartUI();" style="margin-top:2.5rem;background:var(--charcoal);color:var(--cream);border:none;cursor:pointer;padding:0.9rem 2.5rem;font-family:var(--font-body);font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:400;">Close</button>
+        <p>Thank you. Our founders will review your project and reach out personally within 48 hours to begin the conversation.<br><br>${mode === 'demo' ? 'Demo mode is active: configure <code>window.ANAVAI_CONFIG.enquiryEndpoint</code> to send enquiries to your CRM/Shopify flow.' : 'Your request has been sent to our project intake system.'}</p>
+        <button onclick="closeCheckout(); clearCart();" style="margin-top:2.5rem;background:var(--charcoal);color:var(--cream);border:none;cursor:pointer;padding:0.9rem 2.5rem;font-family:var(--font-body);font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:400;">Close</button>
       </div>
     `;
-    cart = [];
-    saveCart();
-    updateCartUI();
+    trackEcom('generate_lead', payload || {});
+    trackEcom('purchase_intent_submitted', {
+      currency: window.anavaiEcom?.currency || 'EUR',
+      value: cart.reduce((s, i) => s + i.price * i.qty, 0),
+      items: mapItems(cart),
+      mode,
+    });
+    clearCart();
   };
 
   window.showNotif = function(msg) {
