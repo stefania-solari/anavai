@@ -1,6 +1,8 @@
 /* ecommerce.js — tracking + enquiry transport layer (Shopify-ready baseline) */
+import defaultConfig from "./anavai-config.js";
+
 (function () {
-  const config = window.ANAVAI_CONFIG || {};
+  const config = { ...defaultConfig, ...(window.ANAVAI_CONFIG || {}) };
   window.dataLayer = window.dataLayer || [];
 
   function nowISO() {
@@ -47,10 +49,10 @@
   }
 
   async function sendEnquiry(payload) {
-    const endpoint = config.enquiryEndpoint || "";
-    if (!endpoint) {
+    if (config.demoMode) {
       return { mode: "demo", ok: true };
     }
+    const endpoint = config.enquiryEndpoint || "/api/enquiry";
     await postJSON(endpoint, payload);
     return { mode: "endpoint", ok: true };
   }

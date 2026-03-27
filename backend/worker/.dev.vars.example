@@ -1,0 +1,13 @@
+SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+SUPABASE_PUBLISHABLE_KEY=YOUR_SUPABASE_PUBLISHABLE_KEY
+# Optional stronger server access:
+# SUPABASE_SERVICE_ROLE_KEY=YOUR_SUPABASE_SERVICE_ROLE_KEY
+SUPABASE_TABLE=enquiries
+
+# Optional email notifications via Resend
+RESEND_API_KEY=YOUR_RESEND_API_KEY
+RESEND_FROM=Anavai Enquiries <noreply@updates.anavai.com>
+NOTIFY_TO=studio@anavai.com
+
+# Comma-separated list, e.g. https://anavai.com,https://www.anavai.com
+ALLOWED_ORIGINS=*

@@ -1,0 +1,13 @@
+name = "anavai-enquiry-worker"
+main = "src/index.js"
+compatibility_date = "2026-03-27"
+
+[vars]
+SUPABASE_TABLE = "enquiries"
+
+# Secrets to set via wrangler:
+# wrangler secret put SUPABASE_URL
+# wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+# wrangler secret put RESEND_API_KEY
+# wrangler secret put RESEND_FROM
+# wrangler secret put NOTIFY_TO

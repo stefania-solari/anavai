@@ -1,0 +1,7 @@
+node_modules
+dist
+
+# Cloudflare / worker local secrets
+.dev.vars
+.env
+.env.local

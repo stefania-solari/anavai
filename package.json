@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "worker:dev": "npm --prefix backend/worker run dev",
+    "worker:deploy": "npm --prefix backend/worker run deploy",
+    "worker:tail": "npm --prefix backend/worker run tail"
   },
   "devDependencies": {
     "vite": "^5.4.19"

@@ -1,5 +1,3 @@
-/* Optional runtime config for enquiry + analytics integrations.
-   Copy values to assets/js/anavai-config.js (module) or define window.ANAVAI_CONFIG inline before ecommerce runs. */
 const DEFAULT_CONFIG = {
   currency: "EUR",
   demoMode: true,
