@@ -14,6 +14,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
     signOutBtn: document.getElementById("signOutBtn"),
     refreshBtn: document.getElementById("refreshLeadsBtn"),
     statusFilter: document.getElementById("statusFilter"),
+    queryFilter: document.getElementById("queryFilter"),
     tableBody: document.getElementById("enquiriesBody"),
     count: document.getElementById("enquiriesCount"),
     toast: document.getElementById("adminToast"),
@@ -25,6 +26,15 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
     ui.toast.textContent = msg;
     ui.toast.classList.add("show");
     setTimeout(() => ui.toast.classList.remove("show"), 3000);
+  }
+
+  function escapeHtml(v) {
+    return String(v ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
   }
 
   if (!supabaseUrl || !supabaseAnonKey) {
@@ -73,12 +83,13 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
         const items = Array.isArray(r.cart_items) ? r.cart_items.length : 0;
         return `
           <tr>
-            <td>${created}</td>
-            <td>${r.email || "-"}</td>
-            <td>${r.source || "-"}</td>
-            <td>${r.client_type || "-"}</td>
-            <td>${r.country || "-"}</td>
-            <td>${r.cart_total || 0} ${r.currency || "EUR"}</td>
+            <td>${escapeHtml(created)}</td>
+            <td>${escapeHtml(r.email || "-")}</td>
+            <td>${escapeHtml(r.source || "-")}</td>
+            <td>${escapeHtml(r.client_type || "-")}</td>
+            <td>${escapeHtml(r.country || "-")}</td>
+            <td>${escapeHtml(r.location || "-")}</td>
+            <td>${escapeHtml(r.cart_total || 0)} ${escapeHtml(r.currency || "EUR")}</td>
             <td>${items}</td>
             <td>
               <select data-id="${r.id}" class="lead-status">
@@ -87,7 +98,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
                   .join("")}
               </select>
             </td>
-            <td>${(r.message || "").slice(0, 80)}</td>
+            <td>${escapeHtml((r.message || "").slice(0, 80))}</td>
           </tr>
         `;
       })
@@ -109,19 +120,37 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
   async function loadEnquiries() {
     const status = ui.statusFilter?.value || "all";
+    const query = (ui.queryFilter?.value || "").trim().toLowerCase();
     let q = supabase
       .from("enquiries")
-      .select("id,created_at,email,source,client_type,country,cart_total,currency,cart_items,status,message")
+      .select("id,created_at,email,source,client_type,country,location,cart_total,currency,cart_items,status,message,raw_payload")
       .order("created_at", { ascending: false })
-      .limit(200);
+      .limit(500);
     if (status !== "all") q = q.eq("status", status);
     const { data, error } = await q;
     if (error) {
       showToast(`Load error: ${error.message}`);
       return;
     }
-    renderRows(data || []);
-    if (ui.count) ui.count.textContent = String((data || []).length);
+    let rows = data || [];
+    if (query) {
+      rows = rows.filter((r) => {
+        const hay = [
+          r.email,
+          r.country,
+          r.location,
+          r.message,
+          r.client_type,
+          r.source,
+          JSON.stringify(r.raw_payload || {}),
+        ]
+          .join(" ")
+          .toLowerCase();
+        return hay.includes(query);
+      });
+    }
+    renderRows(rows);
+    if (ui.count) ui.count.textContent = String(rows.length);
   }
 
   async function updateAuthUI() {
@@ -139,6 +168,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
   ui.signOutBtn?.addEventListener("click", signOut);
   ui.refreshBtn?.addEventListener("click", loadEnquiries);
   ui.statusFilter?.addEventListener("change", loadEnquiries);
+  ui.queryFilter?.addEventListener("input", loadEnquiries);
 
   supabase.auth.onAuthStateChange(() => {
     updateAuthUI().catch(() => {});

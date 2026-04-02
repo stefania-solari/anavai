@@ -8,6 +8,7 @@ create table if not exists public.enquiries (
   email text not null,
   full_name text,
   phone text,
+  location text,
   country text,
   client_type text,
   sample_requested text,
@@ -19,6 +20,9 @@ create table if not exists public.enquiries (
   cart_items jsonb not null default '[]'::jsonb,
   raw_payload jsonb not null default '{}'::jsonb
 );
+
+alter table public.enquiries add column if not exists location text;
+alter table public.enquiries add column if not exists status text not null default 'new';
 
 create index if not exists enquiries_created_at_idx on public.enquiries (created_at desc);
 create index if not exists enquiries_email_idx on public.enquiries (email);

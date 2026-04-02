@@ -8,6 +8,7 @@
 <link rel="canonical" href="https://anavai.com/pages/hotels.html">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <style>
 .hotel-hero-split {
   display: grid; grid-template-columns: 1fr 1fr;
@@ -82,6 +83,28 @@
 .hotel-form .form-label { color: rgba(255,255,255,0.4); }
 .hotel-form .btn-primary { background: var(--ochre); }
 .hotel-form .btn-primary:hover { background: var(--ochre-deep); }
+.city-search-section { padding: 2.5rem 5rem 0; background: var(--warm-white); }
+.city-search-box { background: white; border: 1px solid var(--sand-deep); padding: 1.4rem; }
+.city-search-form { display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; }
+.city-search-results { margin-top: 1.4rem; }
+.city-search-meta { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.8rem; letter-spacing: 0.05em; }
+.city-search-status { font-size: 0.72rem; color: var(--muted); margin-top: 0.8rem; }
+.city-search-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.9rem; margin-top: 0.8rem; }
+.city-map { margin-top: 1rem; height: 380px; border: 1px solid var(--sand-deep); }
+.map-legend { margin-top: 0.6rem; display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.68rem; color: var(--muted); }
+.map-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 0.35rem; }
+.dot-producer { background: #5c7a5e; }
+.dot-product { background: #c8974a; }
+.dot-market { background: #b86540; }
+.city-col { border: 1px solid var(--sand); padding: 0.8rem; min-height: 150px; }
+.city-col h3 { font-family: var(--font-display); font-weight: 400; font-size: 1.1rem; margin-bottom: 0.5rem; }
+.city-item { border-top: 1px solid var(--sand); padding-top: 0.5rem; margin-top: 0.5rem; }
+.city-item h4 { font-size: 0.8rem; font-weight: 500; margin-bottom: 0.2rem; color: var(--charcoal); }
+.city-item-meta { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sage-deep); }
+.city-item-addr { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; line-height: 1.6; }
+.city-list-empty { font-size: 0.72rem; color: var(--muted); }
+.city-chip { border: 1px solid var(--sand-deep); background: var(--warm-white); cursor: pointer; padding: 0.35rem 0.65rem; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; margin-right: 0.35rem; margin-bottom: 0.35rem; }
+.city-chip:hover { border-color: var(--charcoal); color: var(--charcoal); }
 @media (max-width: 1024px) {
   .hotel-hero-split { grid-template-columns: 1fr; }
   .hotel-hero-left { padding: 4rem 2.5rem; min-height: 60vw; }
@@ -91,6 +114,8 @@
   .we-inner { grid-template-columns: 1fr; gap: 3rem; }
   .hotel-cta-inner { grid-template-columns: 1fr; gap: 3rem; }
   .spaces-section, .case-section, .wellness-element-section, .hotel-cta { padding: 4rem 2.5rem; }
+  .city-search-section { padding: 2rem 2.5rem 0; }
+  .city-search-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) { .spaces-grid { grid-template-columns: 1fr; } .element-map { grid-template-columns: 1fr; } }
 </style>
@@ -132,6 +157,35 @@
     </div>
   </div>
 </div>
+
+<!-- CITY SEARCH -->
+<section class="city-search-section">
+  <div class="city-search-box">
+    <p class="section-eyebrow">City Discovery</p>
+    <h2 class="section-title" style="font-size:2rem;">Search any <em>city</em></h2>
+    <p style="font-size:0.8rem;line-height:1.9;color:var(--muted);margin:0.6rem 0 1rem;">Find nearby producers, product points, and markets to benchmark supply and sourcing opportunities.</p>
+    <form id="citySearchForm" class="city-search-form">
+      <input id="citySearchInput" type="text" class="form-input" placeholder="Try: Rome, Paris, Tokyo, São Paulo, Nairobi">
+      <button id="citySearchBtn" class="btn-primary" type="submit">Search City</button>
+    </form>
+    <div id="citySearchResults" class="city-search-results" style="display:none;">
+      <p id="citySearchMeta" class="city-search-meta"></p>
+      <div id="citySearchAlternatives"></div>
+      <div id="cityMap" class="city-map"></div>
+      <div class="map-legend">
+        <span><span class="map-dot dot-producer"></span>Producers</span>
+        <span><span class="map-dot dot-product"></span>Products</span>
+        <span><span class="map-dot dot-market"></span>Markets</span>
+      </div>
+      <div class="city-search-grid">
+        <div class="city-col"><h3>Producers</h3><div id="cityProducers"></div></div>
+        <div class="city-col"><h3>Products</h3><div id="cityProducts"></div></div>
+        <div class="city-col"><h3>Markets</h3><div id="cityMarkets"></div></div>
+      </div>
+    </div>
+    <p id="citySearchStatus" class="city-search-status"></p>
+  </div>
+</section>
 
 <!-- SPACES WE SERVE -->
 <section class="spaces-section">
@@ -252,7 +306,7 @@
       <h2 class="section-title">Let's design<br><em>your property</em></h2>
       <p class="hotel-cta-desc">We visit properties by appointment across Europe. Tell us about your hotel or retreat and we'll prepare a tailored presentation with element mapping and preliminary pattern proposals.</p>
     </div>
-    <div class="hotel-form">
+    <div class="hotel-form" id="hotelLeadForm">
       <div class="form-group"><label class="form-label">Property Name</label><input type="text" class="form-input" placeholder="Hotel Villa Serena"></div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Location</label><input type="text" class="form-input" placeholder="Ibiza, Spain"></div>
@@ -261,7 +315,7 @@
       <div class="form-group"><label class="form-label">Your Name & Role</label><input type="text" class="form-input" placeholder="Anna Ferrari, General Manager"></div>
       <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="anna@hotelvillaserena.com"></div>
       <div class="form-group"><label class="form-label">Spaces of Interest</label><textarea class="form-input" rows="3" placeholder="Lobby, spa, suite wing..."></textarea></div>
-      <button class="btn-primary" onclick="showNotif('Enquiry received. We will reach out within 48 hours.')">Send Property Enquiry →</button>
+      <button id="hotelLeadBtn" class="btn-primary" onclick="submitHotelLead()">Send Property Enquiry →</button>
     </div>
   </div>
 </div>
@@ -281,6 +335,47 @@
 <div class="checkout-modal" id="checkoutModal"><div class="checkout-modal-bg" onclick="closeCheckout()"></div><div class="checkout-box" id="checkoutBox"><button class="checkout-close" onclick="closeCheckout()">✕</button><h2>Your Enquiry</h2><p class="checkout-sub">Our founders will reach out within 48 hours.</p><div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input"></div><div class="form-group"><label class="form-label">Project Details</label><textarea class="form-input" rows="4"></textarea></div><div class="checkout-actions"><button class="btn-cancel" onclick="closeCheckout()">Back</button><button class="btn-place-order" onclick="placeOrder()">Send →</button></div></div></div>
 <div class="notif" id="notif"></div>
 <script type="module" src="../assets/js/ecommerce.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script type="module" src="../assets/js/city-search.js"></script>
 <script type="module" src="../assets/js/cart.js"></script><script type="module" src="../assets/js/nav.js"></script>
+<script>
+async function submitHotelLead() {
+  const form = document.getElementById('hotelLeadForm');
+  const btn = document.getElementById('hotelLeadBtn');
+  if (!form || !btn) return;
+  const fields = {};
+  form.querySelectorAll('input, textarea').forEach((el, idx) => {
+    const key = (el.previousElementSibling?.textContent || el.placeholder || `field_${idx}`)
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_|_$/g, '');
+    fields[key || `field_${idx}`] = el.value?.trim() || '';
+  });
+
+  if (!fields.email || !fields.email.includes('@')) {
+    showNotif('Please insert a valid email');
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  try {
+    const payload = {
+      source: 'hotels_page',
+      submitted_at: new Date().toISOString(),
+      fields
+    };
+    const res = await (window.anavaiEcom?.sendEnquiry ? window.anavaiEcom.sendEnquiry(payload) : Promise.resolve({ mode: 'demo' }));
+    showNotif(res.mode === 'demo' ? 'Saved in demo mode. Configure endpoint to persist.' : 'Enquiry sent successfully');
+    form.querySelectorAll('input, textarea').forEach(el => { el.value = ''; });
+    if (window.anavaiEcom?.track) window.anavaiEcom.track('generate_lead', payload);
+  } catch (e) {
+    showNotif('Unable to send enquiry');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Send Property Enquiry →';
+  }
+}
+</script>
 </body>
 </html>

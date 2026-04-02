@@ -49,6 +49,7 @@ table.admin-table { width: 100%; border-collapse: collapse; min-width: 980px; }
         <p class="admin-note">Logged in as <strong id="adminUserEmail"></strong></p>
       </div>
       <div class="admin-toolbar">
+        <input id="queryFilter" class="form-input" style="width:auto;min-width:220px;" type="text" placeholder="Search city, country, email...">
         <select id="statusFilter" class="form-input" style="width:auto;min-width:160px;">
           <option value="all">All statuses</option>
           <option value="new">new</option>
@@ -70,6 +71,7 @@ table.admin-table { width: 100%; border-collapse: collapse; min-width: 980px; }
             <th>Source</th>
             <th>Type</th>
             <th>Country</th>
+            <th>Location</th>
             <th>Total</th>
             <th>Items</th>
             <th>Status</th>
